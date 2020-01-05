@@ -14,7 +14,8 @@ char message[MAXLEN];
 
 int main(int argc, char *argv[])
 {
-    int *playersNumber = atoi(argv[1]);
+    char * playersNumber_str = argv[1];
+    int playersNumber = atoi(playersNumber_str);
     pipe(fd); /* Create unnamed pipe */
     printf("Sto forkando\n");
     pid_t pid = fork();
@@ -34,7 +35,7 @@ int main(int argc, char *argv[])
         dup2(fd[WRITE], WRITE);
         close(fd[READ]);
         close(fd[WRITE]);
-        char *const paramList[] = {"bin/day", playersNumber, NULL};
+        char *const paramList[] = {"bin/day", playersNumber_str, NULL};
         int e = execv(paramList[0], paramList);
     }
 

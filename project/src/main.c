@@ -4,7 +4,7 @@
 
 #define READ 0     /* read-side of pipes */
 #define WRITE 1    /* write-side of pipes */
-#define MAXLEN 100 /* max length of message */
+#define MAXLEN 300 /* max length of message */  //DA ALZARE PROPORZIONALMENTE AI PROCESSI CHE SI VENGONO A CREARE
 
 //char *msg = "Content of pipe.";
 

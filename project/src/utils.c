@@ -12,15 +12,15 @@ typedef enum
     TRUE
 } Boole_t;
 
-uint squadre[MAX_TEAMS];
-uint calendario[MAX_TEAMS][MAX_TEAMS];
+int squadre[MAX_TEAMS];
+int calendario[MAX_TEAMS][MAX_TEAMS];
 
-int main()
+int matching()
 {
-    size_t numSquadre = 7;
-    size_t pivot, giornate;
-    size_t Shift = 1;
-    size_t i, first, temp;
+    int numSquadre = 7;
+    int pivot, giornate;
+    int Shift = 1;
+    int i, first, temp;
 
     pivot = rand() % numSquadre;
 
@@ -64,7 +64,7 @@ int main()
 
             calendario[squadre[id1]][squadre[id2]] = i + 1;
             calendario[squadre[id2]][squadre[id1]] = i + 1;
-            id1 = (++id1) % numSquadre;
+            id1 = (id1+1) % numSquadre;
         }
         puts("");
         first = (first + Shift) % numSquadre;

@@ -1,21 +1,37 @@
 #include <stdio.h>
 #include <sys/types.h>
 #include <string.h>
+#include <stdlib.h>
+#include "utils.h"
 
-#define READ 0     /* read-side of pipes */
-#define WRITE 1    /* write-side of pipes */
-#define MAXLEN 300 /* max length of message */  //DA ALZARE PROPORZIONALMENTE AI PROCESSI CHE SI VENGONO A CREARE
+#define READ 0  /* read-side of pipes */
+#define WRITE 1 /* write-side of pipes */
 
-//char *msg = "Content of pipe.";
+int championship[MAXN][MAXN];
 
 int fd[2], bytesRead;
 char message[MAXLEN];
 
+char buffer[MAXLEN]; // used to convert int to str
 
 int main(int argc, char *argv[])
 {
-    char * playersNumber_str = argv[1];
+    char *playersNumber_str = argv[1];
     int playersNumber = atoi(playersNumber_str);
+
+    matching(playersNumber, championship); // matrix playersNumber x playersNumber-1
+
+    //printf("championship\n");
+    for (int i = 0; i < playersNumber - 1; i++)
+    {
+        for (int j = 0; j < playersNumber; j++)
+        {
+            printf("%d", championship[i][j]);
+            printf(" ");
+        }
+        printf("\n");
+    }
+
     pipe(fd); /* Create unnamed pipe */
     printf("Sto forkando\n");
     pid_t pid = fork();
@@ -35,8 +51,29 @@ int main(int argc, char *argv[])
         dup2(fd[WRITE], WRITE);
         close(fd[READ]);
         close(fd[WRITE]);
-        char *const paramList[] = {"bin/day", playersNumber_str, NULL};
-        int e = execv(paramList[0], paramList);
+        //char *const paramList[] = {"bin/day", playersNumber_str, NULL};
+
+        char *paramList[playersNumber + 3];
+        paramList[0] = "bin/day";
+        paramList[1] = playersNumber_str;
+        paramList[playersNumber + 2] = NULL;
+
+        int i, j;
+
+        for (i = 0; i < playersNumber - 1; i++) // for each day
+        {
+            for (j = 0; j < playersNumber; j++)
+            { // single day
+                sprintf(buffer, "%d", championship[i][j]);
+
+                printf("%s\n", buffer);
+                //itoa(championship[i][j], buffer, 10);
+                strcpy(paramList[j + 2], buffer);
+            }
+
+            int e = execv(paramList[0], paramList);
+            // wait
+        }
     }
 
     return 0;

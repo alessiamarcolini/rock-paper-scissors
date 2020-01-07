@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <sys/types.h>
 #include <string.h>
+#include "utils.h"
 
-#define READ 0     /* read-side of pipes */
-#define WRITE 1    /* write-side of pipes */
-#define MAXLEN 100 /* max length of message */
+#define READ 0  /* read-side of pipes */
+#define WRITE 1 /* write-side of pipes */
 
-int fd[2], bytesRead;
+int bytesRead;
 char message[MAXLEN];
 
 int main(int argc, char *argv[])
@@ -15,10 +15,18 @@ int main(int argc, char *argv[])
     printf("sono la giornata\n");
     //printf("%s\n", argv[1]);
 
-    //ciclo per la creazione del numero di match, testing
     int i;
-    for(i=0; i < playersNumber/2; i++) {
-        pipe(&fd); /* Create unnamed pipe */
+    for (i = 0; i < argc; i++)
+    {
+        printf("%s ", argv[i]);
+    }
+
+    //ciclo per la creazione del numero di match, testing
+
+    for (i = 0; i < playersNumber / 2; i++)
+    {
+        int fd[2];
+        pipe(fd); /* Create unnamed pipe */
         pid_t pid = fork();
 
         if (pid > 0)
@@ -43,6 +51,6 @@ int main(int argc, char *argv[])
             int e = execv(paramList[0], paramList);
         }
     }
-    
+
     return 0;
 }

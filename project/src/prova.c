@@ -18,7 +18,10 @@ int main()
         close(fd[WRITE]);                       /* close this side */
     }
     else
-    {                     /* Child, reader*/
+    {     
+        
+        
+                        /* Child, reader*/
         close(fd[WRITE]); /* close other side */
         bytesRead = read(fd[READ], message, MAXLEN);
         printf("Read %d bytes: %s\n", bytesRead, message);

@@ -1,36 +1,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include "utils.h"
 
 /* Limite totalmente arbitrario */
-#define MAX_TEAMS 32U
-
-typedef unsigned int uint;
-typedef enum
-{
-    FALSE,
-    TRUE
-} Boole_t;
 
 int squadre[MAX_TEAMS];
 int calendario[MAX_TEAMS][MAX_TEAMS];
 
-int matching()
+int matching(int numSquadre, int championship[MAXN][MAXN])
 {
-    int numSquadre = 7;
     int pivot, giornate;
     int Shift = 1;
     int i, first, temp;
 
     pivot = rand() % numSquadre;
 
-
     for (i = 0; i < numSquadre; i++)
     {
         squadre[i] = i;
     }
-    
-    
 
     temp = squadre[pivot];
     squadre[pivot] = squadre[numSquadre - 1];
@@ -40,38 +29,49 @@ int matching()
     giornate = numSquadre;
     first = 0;
 
-    printf("Squadre........... %d\nPivot............. %d\n"
-           "Shift............. %d\n",
-           numSquadre + 1, squadre[numSquadre], Shift);
+    //printf("Squadre........... %d\nPivot............. %d\n"
+    //       "Shift............. %d\n",
+    //       numSquadre + 1, squadre[numSquadre], Shift);
 
     for (i = 0; i < giornate; ++i)
     {
+        int j = 0;
+
         size_t id1;
         int ofs;
 
-        printf(">> Giornata %2d *******************************************************\n"
-               "%d-%d",
-               i + 1, squadre[numSquadre], squadre[first]);
+        //printf(">> Giornata %2d *******************************************************\n"
+        //       "%d-%d",
+        //       i + 1, squadre[numSquadre], squadre[first]);
 
         calendario[squadre[numSquadre]][squadre[first]] = i + 1;
         calendario[squadre[first]][squadre[numSquadre]] = i + 1;
+
+        championship[i][j] = squadre[numSquadre];
+        championship[i][j + 1] = squadre[first];
+        j += 2;
 
         for (id1 = (first + 1) % numSquadre, ofs = numSquadre - 2; ofs > 0; ofs -= 2)
         {
             size_t id2 = (id1 + ofs) % numSquadre;
 
-            printf(", %d-%d", squadre[id1], squadre[id2]);
+            //printf(", %d-%d", squadre[id1], squadre[id2]);
+
+            championship[i][j] = squadre[id1];
+            championship[i][j + 1] = squadre[id2];
+
+            j += 2;
 
             calendario[squadre[id1]][squadre[id2]] = i + 1;
             calendario[squadre[id2]][squadre[id1]] = i + 1;
-            id1 = (id1+1) % numSquadre;
+            id1 = (id1 + 1) % numSquadre;
         }
-        puts("");
+        //puts("");
         first = (first + Shift) % numSquadre;
     }
 
-    puts("**********************************************************************\n");
-
+    //puts("**********************************************************************\n");
+    /*
     for (i = 0; i <= numSquadre; ++i)
     {
         size_t j;
@@ -81,6 +81,7 @@ int matching()
         }
         puts("");
     }
+    */
 
     return EXIT_SUCCESS;
 }

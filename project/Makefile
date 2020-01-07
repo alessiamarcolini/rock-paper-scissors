@@ -17,8 +17,8 @@ build:
 	@ln -s bin/main run
 	@echo "Build complete"
 
-bin/main: src/main.c
-	$(CC) $(CFLAGS) -o bin/main src/main.c
+bin/main: src/main.c bin/utils.o
+	$(CC) $(CFLAGS) -o bin/main src/main.c bin/utils.o
 
 bin/day: src/day.c bin/utils.o
 	$(CC) $(CFLAGS) -o bin/day src/day.c bin/utils.o

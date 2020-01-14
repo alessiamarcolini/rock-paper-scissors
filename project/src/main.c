@@ -14,12 +14,13 @@ int championship[MAXN][MAXN];
 int fd[2], bytesRead;
 char message[MAXLEN];
 
-char buffer[MAXLEN]; // used to convert int to str
+char *buffer; // used to convert int to str
 
 int i, j;
 
 int main(int argc, char *argv[])
 {
+    buffer = malloc(sizeof(char) * 1024);
     char *playersNumber_str = argv[1];
     int playersNumber = atoi(playersNumber_str);
 
@@ -86,21 +87,27 @@ int main(int argc, char *argv[])
 
                 //printf("j=%d ", j);
                 fprintf(stderr, "j=%d ", j);
-                sprintf(buffer, "%d", championship[i][j]);
+                //sprintf(buffer, "%d", championship[i][j]);
+                //buffer = inttostr(championship[i][j]);
+                fprintf(stderr, "ciao ");
+                fprintf(stderr, "%d", championship[i][j]);
+                snprintf(buffer, 1024, "%d", championship[i][j]);
 
                 //printf("%s ", buffer);
-                fprintf(stderr, "%s ", buffer);
+                //fprintf(stderr, "%s ", buffer);
                 //itoa(championship[i][j], buffer, 10);
 
                 //strcpy(paramList[j], buffer);
-                //strcpy(paramList[j + 2], buffer);
-                paramList[j + 2] = buffer;
-                buffer[0] = '\0';
+                paramList[j + 2] = malloc(sizeof(char) * 1024);
+                strcpy(paramList[j + 2], buffer);
+                //fprintf(stderr, "-----%s-----", buffer);
+                //paramList[j + 2] = buffer;
+                //buffer[0] = '\0';
             }
             fprintf(stderr, "\nparam list content: ");
             for (j = 0; j < playersNumber; j++)
             {
-                //fprintf(stderr, "%s ", paramList[j]);
+                fprintf(stderr, "%s ", paramList[j]);
             }
 
             int e = execv(paramList[0], paramList);

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <sys/types.h>
 #include <string.h>
+#include <unistd.h>
 #include "utils.h"
 
 #define READ 0  /* read-side of pipes */
@@ -14,7 +15,6 @@ int main(int argc, char *argv[])
     int playersNumber = atoi(argv[1]);
     printf("sono la giornata\n");
     //printf("%s\n", argv[1]);
-
     int i;
     for (i = 0; i < argc; i++)
     {
@@ -25,6 +25,7 @@ int main(int argc, char *argv[])
 
     for (i = 0; i < playersNumber / 2; i++)
     {
+        //sleep(1);
         int fd[2];
         pipe(fd); /* Create unnamed pipe */
         pid_t pid = fork();
@@ -44,10 +45,16 @@ int main(int argc, char *argv[])
             dup2(fd[WRITE], WRITE);
             close(fd[READ]);
             close(fd[WRITE]);
+
             //convert i to a string
-            char str[12];
-            sprintf(str, "%d", i);
-            char *const paramList[] = {"bin/match", str, NULL};
+            char matchId[12];
+            sprintf(matchId, "%d", i);
+
+            //char *firstPlayer = argv[i * 2 + 2];
+            //char *secondPlayer = argv[i * 2 + 3];
+
+            char *const paramList[] = {"bin/match", matchId, "1", "2", NULL};
+            //char *const paramList[] = {"bin/match", matchId, NULL};
             int e = execv(paramList[0], paramList);
         }
     }

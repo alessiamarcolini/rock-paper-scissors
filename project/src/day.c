@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <sys/types.h>
 #include <string.h>
+#include <unistd.h>
 #include "utils.h"
 
 #define READ 0  /* read-side of pipes */
@@ -25,6 +26,7 @@ int main(int argc, char *argv[])
 
     for (i = 0; i < playersNumber / 2; i++)
     {
+        sleep(1);
         int fd[2];
         pipe(fd); /* Create unnamed pipe */
         pid_t pid = fork();

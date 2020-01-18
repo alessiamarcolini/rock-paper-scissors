@@ -5,12 +5,6 @@
 
 int main(int argc, char *argv[])
 {
-    //int i, j;
-    //int nTrials = 10;
-    //
-    //char *matchId = argv[1];
-    //char *firstPlayerId = argv[2];
-    //char *secondPlayerId = argv[3];
 
     int i, j;
     int nTrials = 10;
@@ -31,6 +25,14 @@ int main(int argc, char *argv[])
 
     int firstPlayerPointsMatches[nTrials];
     int secondPlayerPointsMatches[nTrials];
+
+    int firstPlayerNWins = 0;
+    int secondPlayerNWins = 0;
+
+    int firstPlayerNLosses = 0;
+    int secondPlayerNLosses = 0;
+
+    int nParity = 0;
 
     /* Intializes random number generator */
     srand(time(0));
@@ -56,18 +58,26 @@ int main(int argc, char *argv[])
                 //printf("first winner\n");
                 firstPlayerPointsMatches[i] = 2;
                 secondPlayerPointsMatches[i] = 0;
+
+                firstPlayerNWins++;
+                secondPlayerNLosses++;
             }
             else if (second == paper)
             { // second winner
                 //printf("second winner\n");
                 firstPlayerPointsMatches[i] = 0;
                 secondPlayerPointsMatches[i] = 2;
+
+                secondPlayerNWins++;
+                firstPlayerNLosses++;
             }
             else if (second == rock)
             { // parity
                 //printf("parity\n");
                 firstPlayerPointsMatches[i] = 1;
                 secondPlayerPointsMatches[i] = 1;
+
+                nParity++;
             }
             break;
         case paper:
@@ -76,18 +86,26 @@ int main(int argc, char *argv[])
                 //printf("first winner\n");
                 firstPlayerPointsMatches[i] = 2;
                 secondPlayerPointsMatches[i] = 0;
+
+                firstPlayerNWins++;
+                secondPlayerNLosses++;
             }
             else if (second == scissor)
             { // second winner
                 //printf("second winner\n");
                 firstPlayerPointsMatches[i] = 0;
                 secondPlayerPointsMatches[i] = 2;
+
+                secondPlayerNWins++;
+                firstPlayerNLosses++;
             }
             else if (second == paper)
             { // parity
                 //printf("parity\n");
                 firstPlayerPointsMatches[i] = 1;
                 secondPlayerPointsMatches[i] = 1;
+
+                nParity++;
             }
             break;
         case scissor:
@@ -96,18 +114,26 @@ int main(int argc, char *argv[])
                 //printf("first winner\n");
                 firstPlayerPointsMatches[i] = 2;
                 secondPlayerPointsMatches[i] = 0;
+
+                firstPlayerNWins++;
+                secondPlayerNLosses++;
             }
             else if (second == rock)
             { // second winner
                 //printf("second winner\n");
                 firstPlayerPointsMatches[i] = 0;
                 secondPlayerPointsMatches[i] = 2;
+
+                secondPlayerNWins++;
+                firstPlayerNLosses++;
             }
             else if (second == scissor)
             { // parity
                 //printf("parity\n");
                 firstPlayerPointsMatches[i] = 1;
                 secondPlayerPointsMatches[i] = 1;
+
+                nParity++;
             }
             break;
         }
@@ -121,6 +147,8 @@ int main(int argc, char *argv[])
     }
 
     printf("first %d, second %d\n", sumPointsFirst, sumPointsSecond);
+
+    printf("first wins %d - second wins %d - first losses %d - second losses %d\n", firstPlayerNWins, secondPlayerNWins, firstPlayerNLosses, secondPlayerNLosses);
 
     printf("ok fatto ");
 

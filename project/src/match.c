@@ -31,16 +31,82 @@ int main(int argc, char *argv[])
 
     for (i = 0; i < nTrials; i++)
     {
-        printf("lancio n: %d ", i);
+        printf("lancio n %d: ", i);
 
-        printf("%d -- ", (outcome)rand() % 3);
+        //printf("%d -- ", (outcome)rand() % 3);
 
         first = (outcome)rand() % 3;
         second = (outcome)rand() % 3;
         firstPlayerOutcomes[i] = first;
         secondPlayerOutcomes[i] = second;
 
-        //printf("ok fatto ");
+        printf("%d %d ", first, second);
+
+        switch (first)
+        {
+        case rock:
+            if (second == scissor)
+            { // first winner
+                //printf("first winner\n");
+                firstPlayerPointsMatches[i] = 2;
+                secondPlayerPointsMatches[i] = 0;
+            }
+            else if (second == paper)
+            { // second winner
+                //printf("second winner\n");
+                firstPlayerPointsMatches[i] = 0;
+                secondPlayerPointsMatches[i] = 2;
+            }
+            else if (second == rock)
+            { // parity
+                //printf("parity\n");
+                firstPlayerPointsMatches[i] = 1;
+                secondPlayerPointsMatches[i] = 1;
+            }
+            break;
+        case paper:
+            if (second == rock)
+            { // first winner
+                //printf("first winner\n");
+                firstPlayerPointsMatches[i] = 2;
+                secondPlayerPointsMatches[i] = 0;
+            }
+            else if (second == scissor)
+            { // second winner
+                //printf("second winner\n");
+                firstPlayerPointsMatches[i] = 0;
+                secondPlayerPointsMatches[i] = 2;
+            }
+            else if (second == paper)
+            { // parity
+                //printf("parity\n");
+                firstPlayerPointsMatches[i] = 1;
+                secondPlayerPointsMatches[i] = 1;
+            }
+            break;
+        case scissor:
+            if (second == paper)
+            { // first winner
+                //printf("first winner\n");
+                firstPlayerPointsMatches[i] = 2;
+                secondPlayerPointsMatches[i] = 0;
+            }
+            else if (second == rock)
+            { // second winner
+                //printf("second winner\n");
+                firstPlayerPointsMatches[i] = 0;
+                secondPlayerPointsMatches[i] = 2;
+            }
+            else if (second == scissor)
+            { // parity
+                //printf("parity\n");
+                firstPlayerPointsMatches[i] = 1;
+                secondPlayerPointsMatches[i] = 1;
+            }
+            break;
+        }
+
+        printf("ok fatto ");
     }
     return 0;
 }

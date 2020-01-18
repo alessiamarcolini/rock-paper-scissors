@@ -13,9 +13,9 @@ int main(int argc, char *argv[])
     char *firstPlayerId = argv[2];
     char *secondPlayerId = argv[3];
 
-    printf("sono il match n %s", matchId);
-    printf("first player: %s - ", firstPlayerId);
-    printf("second player: %s\n", secondPlayerId);
+    //printf("sono il match n %s", matchId);
+    //printf("first player: %s - ", firstPlayerId);
+    //printf("second player: %s\n", secondPlayerId);
 
     outcome first;
     outcome second;
@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
 
     for (i = 0; i < nTrials; i++)
     {
-        printf("lancio n %d: ", i);
+        //printf("lancio n %d: ", i);
 
         //printf("%d -- ", (outcome)rand() % 3);
 
@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
         firstPlayerOutcomes[i] = first;
         secondPlayerOutcomes[i] = second;
 
-        printf("%d %d ", first, second);
+        //printf("%d %d ", first, second);
 
         switch (first)
         {
@@ -146,11 +146,13 @@ int main(int argc, char *argv[])
         sumPointsSecond += secondPlayerPointsMatches[j];
     }
 
-    printf("first %d, second %d\n", sumPointsFirst, sumPointsSecond);
+    //printf("first %d, second %d\n", sumPointsFirst, sumPointsSecond);
 
-    printf("first wins %d - second wins %d - first losses %d - second losses %d\n", firstPlayerNWins, secondPlayerNWins, firstPlayerNLosses, secondPlayerNLosses);
+    //printf("first wins %d - second wins %d - first losses %d - second losses %d\n", firstPlayerNWins, secondPlayerNWins, firstPlayerNLosses, secondPlayerNLosses);
 
-    printf("ok fatto ");
+    //printf("ok fatto ");
+
+    printf("%s %s %d %d %d %d %d %d %d\n", firstPlayerId, secondPlayerId, sumPointsFirst, sumPointsSecond, firstPlayerNWins, secondPlayerNWins, firstPlayerNLosses, secondPlayerNLosses, nParity);
 
     return 0;
 }

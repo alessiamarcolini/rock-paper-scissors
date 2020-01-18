@@ -85,29 +85,13 @@ int main(int argc, char *argv[])
             for (j = 0; j < playersNumber; j++)
             { // single day
 
-                //printf("j=%d ", j);
-                fprintf(stderr, "j=%d ", j);
-                //sprintf(buffer, "%d", championship[i][j]);
-                //buffer = inttostr(championship[i][j]);
-                fprintf(stderr, "ciao ");
-                fprintf(stderr, "%d", championship[i][j]);
                 snprintf(buffer, 1024, "%d", championship[i][j]);
 
-                //printf("%s ", buffer);
-                //fprintf(stderr, "%s ", buffer);
-                //itoa(championship[i][j], buffer, 10);
-
-                //strcpy(paramList[j], buffer);
                 paramList[j + 2] = malloc(sizeof(char) * 1024);
                 strcpy(paramList[j + 2], buffer);
                 //fprintf(stderr, "-----%s-----", buffer);
                 //paramList[j + 2] = buffer;
                 //buffer[0] = '\0';
-            }
-            fprintf(stderr, "\nparam list content: ");
-            for (j = 0; j < playersNumber; j++)
-            {
-                fprintf(stderr, "%s ", paramList[j]);
             }
 
             int e = execv(paramList[0], paramList);

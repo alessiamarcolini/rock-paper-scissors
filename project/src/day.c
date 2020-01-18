@@ -47,7 +47,11 @@ int main(int argc, char *argv[])
             //convert i to a string
             char str[12];
             sprintf(str, "%d", i);
-            char *const paramList[] = {"bin/match", str, NULL};
+
+            char *firstPlayer = argv[i * 2 + 2];
+            char *secondPlayer = argv[i * 2 + 3];
+
+            char *const paramList[] = {"bin/match", str, firstPlayer, secondPlayer, NULL};
             int e = execv(paramList[0], paramList);
         }
     }

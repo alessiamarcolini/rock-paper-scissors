@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
 
     for (i = 0; i < playersNumber / 2; i++)
     {
-        //sleep(1);
+        sleep(1);
         int fd[2];
         pipe(fd); /* Create unnamed pipe */
         pid_t pid = fork();
@@ -47,14 +47,13 @@ int main(int argc, char *argv[])
             close(fd[WRITE]);
 
             //convert i to a string
-            char matchId[12];
-            sprintf(matchId, "%d", i);
+            char str[12];
+            sprintf(str, "%d", i);
 
-            //char *firstPlayer = argv[i * 2 + 2];
-            //char *secondPlayer = argv[i * 2 + 3];
+            char *firstPlayer = argv[i * 2 + 2];
+            char *secondPlayer = argv[i * 2 + 3];
 
-            char *const paramList[] = {"bin/match", matchId, "1", "2", NULL};
-            //char *const paramList[] = {"bin/match", matchId, NULL};
+            char *const paramList[] = {"bin/match", str, firstPlayer, secondPlayer, NULL};
             int e = execv(paramList[0], paramList);
         }
     }

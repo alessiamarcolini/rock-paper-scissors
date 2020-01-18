@@ -82,6 +82,9 @@ int main(int argc, char *argv[])
                 paramList[j + 2] = malloc(sizeof(char) * 1024);
                 // TODO: fix memory leak
                 strcpy(paramList[j + 2], buffer);
+                //fprintf(stderr, "-----%s-----", buffer);
+                //paramList[j + 2] = buffer;
+                //buffer[0] = '\0';
             }
 
             int e = execv(paramList[0], paramList);

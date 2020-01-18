@@ -13,13 +13,9 @@ char message[MAXLEN];
 int main(int argc, char *argv[])
 {
     int playersNumber = atoi(argv[1]);
-    printf("sono la giornata\n");
+    //printf("sono la giornata\n");
     //printf("%s\n", argv[1]);
     int i;
-    for (i = 0; i < argc; i++)
-    {
-        printf("%s ", argv[i]);
-    }
 
     //ciclo per la creazione del numero di match, testing
 
@@ -36,7 +32,8 @@ int main(int argc, char *argv[])
 
             close(fd[WRITE]); /* close other side */
             bytesRead = read(fd[READ], message, MAXLEN);
-            printf("- day: Read %d bytes: %s\n", bytesRead, message);
+            printf("%d|%s\n", i, message); // dayId|message
+
             close(fd[READ]); /* close this side */
         }
         else

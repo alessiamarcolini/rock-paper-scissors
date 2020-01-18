@@ -1,9 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 #include "utils.h"
-
-/* Limite totalmente arbitrario */
 
 int squadre[MAX_TEAMS];
 int calendario[MAX_TEAMS][MAX_TEAMS];
@@ -84,4 +83,26 @@ int matching(int numSquadre, int championship[MAXN][MAXN])
     */
 
     return EXIT_SUCCESS;
+}
+
+//tokenizes a string into tokens delimited by a given delimiter char
+void tokenizer(char *buffer, char **tokens, char *delimiter)
+{
+    // split
+    char *delim = delimiter;
+
+    char *ptr;
+    int tokenIndex;
+    ptr = strtok(buffer, delim);
+    tokens[0] = ptr;
+
+    tokenIndex = 1;
+
+    while (ptr != NULL)
+    {
+        //printf("'%s'\n", ptr);
+        ptr = strtok(NULL, delim);
+        tokens[tokenIndex] = ptr;
+        tokenIndex++;
+    }
 }

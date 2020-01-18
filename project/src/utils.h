@@ -7,7 +7,6 @@
 #define MAXLEN 7000 // max len of message
 
 #define MAX_TEAMS 32U
-int matching(int numSquadre, int championship[MAXN][MAXN]);
 
 enum rockPaperScissor
 {
@@ -17,3 +16,6 @@ enum rockPaperScissor
 };
 
 typedef enum rockPaperScissor outcome;
+
+int matching(int numSquadre, int championship[MAXN][MAXN]);
+void tokenizer(char *buffer, char **tokens, char *delimiter);

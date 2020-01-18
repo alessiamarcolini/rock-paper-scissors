@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
 
     printf("sono il match n %s", matchId);
     printf("first player: %s - ", firstPlayerId);
-    printf("second player: %s", secondPlayerId);
+    printf("second player: %s\n", secondPlayerId);
 
     outcome first;
     outcome second;
@@ -105,8 +105,18 @@ int main(int argc, char *argv[])
             }
             break;
         }
-
-        printf("ok fatto ");
     }
+    int sumPointsFirst = 0;
+    int sumPointsSecond = 0;
+    for (j = 0; j < nTrials; j++)
+    {
+        sumPointsFirst += firstPlayerPointsMatches[j];
+        sumPointsSecond += secondPlayerPointsMatches[j];
+    }
+
+    printf("first %d, second %d\n", sumPointsFirst, sumPointsSecond);
+
+    printf("ok fatto ");
+
     return 0;
 }

@@ -8,3 +8,12 @@
 
 #define MAX_TEAMS 32U
 int matching(int numSquadre, int championship[MAXN][MAXN]);
+
+enum rockPaperScissor
+{
+    rock,
+    paper,
+    scissor
+};
+
+typedef enum rockPaperScissor outcome;

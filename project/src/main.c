@@ -24,6 +24,16 @@ int main(int argc, char *argv[])
     char *playersNumber_str = argv[1];
     int playersNumber = atoi(playersNumber_str);
 
+    //arrays for calculate rate and parity
+    int *score[playersNumber];
+    int *differencePoints[playersNumber];
+    for(i = 0; i < playersNumber; i++) { //da deallocare
+        score[i] = malloc(sizeof(int) * 1024);
+        score[i] = 0;
+        differencePoints[i] = malloc(sizeof(int) * 1024);
+        differencePoints[i] = 0; 
+    }
+
     matching(playersNumber, championship); // matrix playersNumber x playersNumber-1
 
     //printf("championship\n");
@@ -56,7 +66,23 @@ int main(int argc, char *argv[])
             {                     // parent
                 close(fd[WRITE]); /* close other side */
                 bytesRead = read(fd[READ], message, MAXLEN);
-                fprintf(stderr, "- main: Read %d bytes: \n%s", bytesRead, message);
+                fprintf(stderr, "\n- main: Read %d bytes: \n%s", bytesRead, message);
+                
+                //parsing and upload on the points structures
+                int resultsTokenized[(MAINSTREAMLEN + 1)*(playersNumber/2)]; // *(playersNumber/2) dovuto al fatto che legge tutto lo stream della giornata, e non il singolo match
+                /*for(j = 0; j < (MAINSTREAMLEN + 1)*(playersNumber/2); j++) { //upload data
+                    resultsTokenized[j] = malloc(sizeof(int) * 1024);
+                }*/
+                tokenizer(message, resultsTokenized, " ");
+                fprintf(stderr, "\n- tokenized array: ");
+                /*for(j = 0; j < (MAINSTREAMLEN + 1)*(playersNumber/2)-3; j++) {
+                    fprintf(stderr, "%d -", resultsTokenized[j]);
+                }*/
+                /*score[resultsTokenized[1]] = score[resultsTokenized[1]] + resultsTokenized[3]; //resultsTokenized[1] = firstPlayerId, resultsTokenized[3] = sumPointsFirstPlayer
+                differencePoints[resultsTokenized[1]] = resultsTokenized[5] - resultsTokenized[7]; //resultsTokenized[5] = numberOfWinFirstPlayer, resultsTokenized[7] = numberOfLoseFirstPlayer
+                score[resultsTokenized[2]] = score[resultsTokenized[2]] + resultsTokenized[4]; //resultsTokenized[2] = secondPlayerId, resultsTokenized[4] = sumPointsSecondPlayer
+                differencePoints[resultsTokenized[2]] = resultsTokenized[6] - resultsTokenized[8]; //resultsTokenized[6] = numberOfWinSecondPlayer, resultsTokenized[8] = numberOfLoseSecondPlayer*/
+                
                 close(fd[READ]); /* close this side */
             }
             else

@@ -152,6 +152,7 @@ int main(int argc, char *argv[])
 
     //printf("ok fatto ");
 
+    //MODIFICA A SECONDA DI CIO' CHE DICE IL PROF
     printf("%s %s %d %d %d %d %d %d %d", firstPlayerId, secondPlayerId, sumPointsFirst, sumPointsSecond, firstPlayerNWins, secondPlayerNWins, firstPlayerNLosses, secondPlayerNLosses, nParity);
 
     return 0;

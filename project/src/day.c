@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
 
             close(fd[WRITE]); /* close other side */
             bytesRead = read(fd[READ], message, MAXLEN);
-            printf("%d|%s\n", i, message); // dayId|message
+            printf("%d %s\n", i, message); // dayId|message
 
             close(fd[READ]); /* close this side */
         }

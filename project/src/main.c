@@ -27,9 +27,9 @@ int main(int argc, char *argv[])
     matching(playersNumber, championship); // matrix playersNumber x playersNumber-1
 
     //printf("championship\n");
-    for (int i = 0; i < playersNumber - 1; i++)
+    for (i = 0; i < playersNumber - 1; i++)
     {
-        for (int j = 0; j < playersNumber; j++)
+        for (j = 0; j < playersNumber; j++)
         {
             fprintf(stderr, "%d", championship[i][j]);
             fprintf(stderr, " ");
@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
     pid_t pid;
     int status; // return status of child
 
-    for (i = 0; i < playersNumber - 1; i++) // for each day
+    for (i = 0; i < (playersNumber - 1)*2; i++) // for each day, (playersNumber - 1)*2 forward and return
     {
         if (i != 0)
         {
@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
         {                     // parent
             close(fd[WRITE]); /* close other side */
             bytesRead = read(fd[READ], message, MAXLEN);
-            fprintf(stderr, "- main: Read %d bytes: %s\n", bytesRead, message);
+            fprintf(stderr, "- main: Read %d bytes: \n%s", bytesRead, message);
             close(fd[READ]); /* close this side */
         }
         else

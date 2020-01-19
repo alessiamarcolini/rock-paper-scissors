@@ -152,7 +152,7 @@ int main(int argc, char *argv[])
 
     //printf("ok fatto ");
 
-    printf("%s %s %d %d %d %d %d %d %d\n", firstPlayerId, secondPlayerId, sumPointsFirst, sumPointsSecond, firstPlayerNWins, secondPlayerNWins, firstPlayerNLosses, secondPlayerNLosses, nParity);
+    printf("%s %s %d %d %d %d %d %d %d", firstPlayerId, secondPlayerId, sumPointsFirst, sumPointsSecond, firstPlayerNWins, secondPlayerNWins, firstPlayerNLosses, secondPlayerNLosses, nParity);
 
     return 0;
 }

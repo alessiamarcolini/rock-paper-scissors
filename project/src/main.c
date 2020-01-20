@@ -16,7 +16,7 @@ char message[MAXLEN];
 
 char *buffer; // used to convert int to str
 
-int i, j, k;
+int i, j, k, s;
 
 int main(int argc, char *argv[])
 {
@@ -78,10 +78,12 @@ int main(int argc, char *argv[])
                 for(j = 0; j < MAINSTREAMLEN*(playersNumber/2); j++) {
                     fprintf(stderr, "%d -", resultsTokenized[j]);
                 }*/
-                score[resultsTokenized[1]] = score[resultsTokenized[1]] + resultsTokenized[3]; //resultsTokenized[1] = firstPlayerId, resultsTokenized[3] = sumPointsFirstPlayer
-                differencePoints[resultsTokenized[1]] = resultsTokenized[5] - resultsTokenized[7]; //resultsTokenized[5] = numberOfWinFirstPlayer, resultsTokenized[7] = numberOfLoseFirstPlayer
-                score[resultsTokenized[2]] = score[resultsTokenized[2]] + resultsTokenized[4]; //resultsTokenized[2] = secondPlayerId, resultsTokenized[4] = sumPointsSecondPlayer
-                differencePoints[resultsTokenized[2]] = resultsTokenized[6] - resultsTokenized[8]; //resultsTokenized[6] = numberOfWinSecondPlayer, resultsTokenized[8] = numberOfLoseSecondPlayer
+                for(j = 0; j < playersNumber/2; j++) {
+                    score[resultsTokenized[j*MAINSTREAMLEN+1]] = score[resultsTokenized[j*MAINSTREAMLEN+1]] + resultsTokenized[j*MAINSTREAMLEN+3]; //resultsTokenized[1] = firstPlayerId, resultsTokenized[3] = sumPointsFirstPlayer
+                    differencePoints[resultsTokenized[j*MAINSTREAMLEN+1]] = differencePoints[resultsTokenized[j*MAINSTREAMLEN+1]] + resultsTokenized[j*MAINSTREAMLEN+5] - resultsTokenized[j*MAINSTREAMLEN+7]; //resultsTokenized[5] = numberOfWinFirstPlayer, resultsTokenized[7] = numberOfLoseFirstPlayer
+                    score[resultsTokenized[j*MAINSTREAMLEN+2]] = score[resultsTokenized[j*MAINSTREAMLEN+2]] + resultsTokenized[j*MAINSTREAMLEN+4]; //resultsTokenized[2] = secondPlayerId, resultsTokenized[4] = sumPointsSecondPlayer
+                    differencePoints[resultsTokenized[j*MAINSTREAMLEN+2]] = differencePoints[resultsTokenized[j*MAINSTREAMLEN+2]] + resultsTokenized[j*MAINSTREAMLEN+6] - resultsTokenized[j*MAINSTREAMLEN+8]; //resultsTokenized[6] = numberOfWinSecondPlayer, resultsTokenized[8] = numberOfLoseSecondPlayer    
+                }
                 
                 fprintf(stderr, "\n");
                 for(j = 0; j < playersNumber; j++) {

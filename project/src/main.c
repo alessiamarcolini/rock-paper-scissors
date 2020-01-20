@@ -7,8 +7,6 @@
 #define READ 0  /* read-side of pipes */
 #define WRITE 1 /* write-side of pipes */
 
-//setbuf(stdout, NULL);
-
 int championship[MAXN][MAXN];
 
 int fd[2], bytesRead;
@@ -16,7 +14,7 @@ char message[MAXLEN];
 
 char *buffer; // used to convert int to str
 
-int i, j, k, s;
+int i, j, k;
 
 int main(int argc, char *argv[])
 {
@@ -105,11 +103,16 @@ int main(int argc, char *argv[])
                 close(fd[WRITE]);
                 //char *const paramList[] = {"bin/day", playersNumber_str, NULL};
 
-                char *paramList[playersNumber + 3];
+                char *paramList[playersNumber + 4];
 
                 paramList[0] = "bin/day";
                 paramList[1] = playersNumber_str;
-                paramList[playersNumber + 2] = NULL;
+                if(k==0) {
+                    paramList[playersNumber + 2] = "A";
+                } else {
+                    paramList[playersNumber + 2] = "R";
+                }
+                paramList[playersNumber + 3] = NULL;
 
                 //fork
 

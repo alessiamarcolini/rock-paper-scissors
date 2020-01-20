@@ -25,6 +25,16 @@ int main(int argc, char *argv[])
     //arrays for calculate rate and parity
     int score[playersNumber];
     int differencePoints[playersNumber];
+    int scoreBoard[playersNumber][playersNumber]; //dove salveremo i punteggi d'andata per poi sommarli al ritorno, utili per il calcolo degli scontri diretti
+
+    //initialization of score board matrix
+    for(i = 0; i < playersNumber; i++) {
+        for(j = 0; j < playersNumber; j++) {
+            scoreBoard[i][j] = 0;
+        }
+    }
+
+    //initialization of score array and points difference array
     for(i = 0; i < playersNumber; i++) { //da deallocare
         //score[i] = malloc(sizeof(int) * 1024);
         score[i] = 0;
@@ -68,19 +78,29 @@ int main(int argc, char *argv[])
                 
                 //parsing and upload on the points structures
                 int resultsTokenized[(MAINSTREAMLEN)*(playersNumber/2)]; // *(playersNumber/2) dovuto al fatto che legge tutto lo stream della giornata, e non il singolo match
-                /*for(j = 0; j < (MAINSTREAMLEN + 1)*(playersNumber/2); j++) { //upload data
-                    resultsTokenized[j] = malloc(sizeof(int) * 1024);
-                }*/
                 tokenizer(message, resultsTokenized, " ", (MAINSTREAMLEN)*(playersNumber/2));
                 /*fprintf(stderr, "\n- tokenized array: ");
                 for(j = 0; j < MAINSTREAMLEN*(playersNumber/2); j++) {
                     fprintf(stderr, "%d -", resultsTokenized[j]);
                 }*/
+                
+                int homePlayer;
+                int externalPlayer;
+                int winFirstPlayer;
+                int winSecondPlayer;
                 for(j = 0; j < playersNumber/2; j++) {
-                    score[resultsTokenized[j*MAINSTREAMLEN+1]] = score[resultsTokenized[j*MAINSTREAMLEN+1]] + resultsTokenized[j*MAINSTREAMLEN+3]; //resultsTokenized[1] = firstPlayerId, resultsTokenized[3] = sumPointsFirstPlayer
-                    differencePoints[resultsTokenized[j*MAINSTREAMLEN+1]] = differencePoints[resultsTokenized[j*MAINSTREAMLEN+1]] + resultsTokenized[j*MAINSTREAMLEN+5] - resultsTokenized[j*MAINSTREAMLEN+7]; //resultsTokenized[5] = numberOfWinFirstPlayer, resultsTokenized[7] = numberOfLoseFirstPlayer
-                    score[resultsTokenized[j*MAINSTREAMLEN+2]] = score[resultsTokenized[j*MAINSTREAMLEN+2]] + resultsTokenized[j*MAINSTREAMLEN+4]; //resultsTokenized[2] = secondPlayerId, resultsTokenized[4] = sumPointsSecondPlayer
-                    differencePoints[resultsTokenized[j*MAINSTREAMLEN+2]] = differencePoints[resultsTokenized[j*MAINSTREAMLEN+2]] + resultsTokenized[j*MAINSTREAMLEN+6] - resultsTokenized[j*MAINSTREAMLEN+8]; //resultsTokenized[6] = numberOfWinSecondPlayer, resultsTokenized[8] = numberOfLoseSecondPlayer    
+                    homePlayer = resultsTokenized[j*MAINSTREAMLEN+1];
+                    externalPlayer = resultsTokenized[j*MAINSTREAMLEN+2];
+                    winFirstPlayer = resultsTokenized[j*MAINSTREAMLEN+5];
+                    winSecondPlayer = resultsTokenized[j*MAINSTREAMLEN+6];
+
+                    score[homePlayer] = score[homePlayer] + resultsTokenized[j*MAINSTREAMLEN+3]; //resultsTokenized[1] = firstPlayerId, resultsTokenized[3] = sumPointsFirstPlayer
+                    differencePoints[homePlayer] = differencePoints[homePlayer] + winFirstPlayer - resultsTokenized[j*MAINSTREAMLEN+7]; //resultsTokenized[5] = numberOfWinFirstPlayer, resultsTokenized[7] = numberOfLoseFirstPlayer
+                    score[externalPlayer] = score[externalPlayer] + resultsTokenized[j*MAINSTREAMLEN+4]; //resultsTokenized[2] = secondPlayerId, resultsTokenized[4] = sumPointsSecondPlayer
+                    differencePoints[externalPlayer] = differencePoints[externalPlayer] + winSecondPlayer - resultsTokenized[j*MAINSTREAMLEN+8]; //resultsTokenized[6] = numberOfWinSecondPlayer, resultsTokenized[8] = numberOfLoseSecondPlayer    
+                    
+                    scoreBoard[homePlayer][externalPlayer] += winFirstPlayer;
+                    scoreBoard[externalPlayer][homePlayer] += winSecondPlayer;
                 }
                 
                 fprintf(stderr, "\n");
@@ -133,6 +153,13 @@ int main(int argc, char *argv[])
                 // wait
             }
         }
+    }
+    printf("\n");
+    for(i = 0; i < playersNumber; i++) {
+        for(j=0; j < playersNumber; j++) {
+            printf("i: %d, j: %d: , value: %d\n", i, j, scoreBoard[i][j]);
+        }
+        printf("\n");
     }
     return 0;
 }

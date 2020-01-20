@@ -23,8 +23,8 @@ int main(int argc, char *argv[])
     outcome firstPlayerOutcomes[nTrials];
     outcome secondPlayerOutcomes[nTrials];
 
-    int firstPlayerPointsMatches[nTrials];
-    int secondPlayerPointsMatches[nTrials];
+    //int first//PlayerPointsMatches[nTrials];
+    //int secondPlayerPointsMatches[nTrials];
 
     int firstPlayerNWins = 0;
     int secondPlayerNWins = 0;
@@ -56,8 +56,8 @@ int main(int argc, char *argv[])
             if (second == scissor)
             { // first winner
                 //printf("first winner\n");
-                firstPlayerPointsMatches[i] = 2;
-                secondPlayerPointsMatches[i] = 0;
+                //firstPlayerPointsMatches[i] = 2;
+                //secondPlayerPointsMatches[i] = 0;
 
                 firstPlayerNWins++;
                 secondPlayerNLosses++;
@@ -65,8 +65,8 @@ int main(int argc, char *argv[])
             else if (second == paper)
             { // second winner
                 //printf("second winner\n");
-                firstPlayerPointsMatches[i] = 0;
-                secondPlayerPointsMatches[i] = 2;
+                //firstPlayerPointsMatches[i] = 0;
+                //secondPlayerPointsMatches[i] = 2;
 
                 secondPlayerNWins++;
                 firstPlayerNLosses++;
@@ -74,8 +74,8 @@ int main(int argc, char *argv[])
             else if (second == rock)
             { // parity
                 //printf("parity\n");
-                firstPlayerPointsMatches[i] = 1;
-                secondPlayerPointsMatches[i] = 1;
+                //firstPlayerPointsMatches[i] = 1;
+                //secondPlayerPointsMatches[i] = 1;
 
                 nParity++;
             }
@@ -84,8 +84,8 @@ int main(int argc, char *argv[])
             if (second == rock)
             { // first winner
                 //printf("first winner\n");
-                firstPlayerPointsMatches[i] = 2;
-                secondPlayerPointsMatches[i] = 0;
+                //firstPlayerPointsMatches[i] = 2;
+                //secondPlayerPointsMatches[i] = 0;
 
                 firstPlayerNWins++;
                 secondPlayerNLosses++;
@@ -93,8 +93,8 @@ int main(int argc, char *argv[])
             else if (second == scissor)
             { // second winner
                 //printf("second winner\n");
-                firstPlayerPointsMatches[i] = 0;
-                secondPlayerPointsMatches[i] = 2;
+                //firstPlayerPointsMatches[i] = 0;
+                //secondPlayerPointsMatches[i] = 2;
 
                 secondPlayerNWins++;
                 firstPlayerNLosses++;
@@ -102,8 +102,8 @@ int main(int argc, char *argv[])
             else if (second == paper)
             { // parity
                 //printf("parity\n");
-                firstPlayerPointsMatches[i] = 1;
-                secondPlayerPointsMatches[i] = 1;
+                //firstPlayerPointsMatches[i] = 1;
+                //secondPlayerPointsMatches[i] = 1;
 
                 nParity++;
             }
@@ -112,8 +112,8 @@ int main(int argc, char *argv[])
             if (second == paper)
             { // first winner
                 //printf("first winner\n");
-                firstPlayerPointsMatches[i] = 2;
-                secondPlayerPointsMatches[i] = 0;
+                //firstPlayerPointsMatches[i] = 2;
+                //secondPlayerPointsMatches[i] = 0;
 
                 firstPlayerNWins++;
                 secondPlayerNLosses++;
@@ -121,8 +121,8 @@ int main(int argc, char *argv[])
             else if (second == rock)
             { // second winner
                 //printf("second winner\n");
-                firstPlayerPointsMatches[i] = 0;
-                secondPlayerPointsMatches[i] = 2;
+                //firstPlayerPointsMatches[i] = 0;
+                //secondPlayerPointsMatches[i] = 2;
 
                 secondPlayerNWins++;
                 firstPlayerNLosses++;
@@ -130,21 +130,34 @@ int main(int argc, char *argv[])
             else if (second == scissor)
             { // parity
                 //printf("parity\n");
-                firstPlayerPointsMatches[i] = 1;
-                secondPlayerPointsMatches[i] = 1;
+                //firstPlayerPointsMatches[i] = 1;
+                //secondPlayerPointsMatches[i] = 1;
 
                 nParity++;
             }
             break;
         }
     }
-    int sumPointsFirst = 0;
-    int sumPointsSecond = 0;
-    for (j = 0; j < nTrials; j++)
+    int pointsFirst;
+    int pointsSecond;
+    
+    //points calculation
+    if(firstPlayerNWins > secondPlayerNWins) {
+        pointsFirst = 2;
+        pointsSecond = 0;
+    } else if(firstPlayerNWins == secondPlayerNWins) {
+        pointsFirst = 1;
+        pointsSecond = 1;
+    } else {
+        pointsFirst = 0;
+        pointsSecond = 2;
+    }
+    
+    /*for (j = 0; j < nTrials; j++)
     {
         sumPointsFirst += firstPlayerPointsMatches[j];
         sumPointsSecond += secondPlayerPointsMatches[j];
-    }
+    }*/
 
     //printf("first %d, second %d\n", sumPointsFirst, sumPointsSecond);
 
@@ -152,8 +165,7 @@ int main(int argc, char *argv[])
 
     //printf("ok fatto ");
 
-    //MODIFICA A SECONDA DI CIO' CHE DICE IL PROF
-    printf("%s %s %d %d %d %d %d %d %d ", firstPlayerId, secondPlayerId, sumPointsFirst, sumPointsSecond, firstPlayerNWins, secondPlayerNWins, firstPlayerNLosses, secondPlayerNLosses, nParity);
+    printf("%s %s %d %d %d %d %d %d %d ", firstPlayerId, secondPlayerId, pointsFirst, pointsSecond, firstPlayerNWins, secondPlayerNWins, firstPlayerNLosses, secondPlayerNLosses, nParity);
 
     return 0;
 }

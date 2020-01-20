@@ -19,4 +19,4 @@ enum rockPaperScissor
 typedef enum rockPaperScissor outcome;
 
 int matching(int numSquadre, int championship[MAXN][MAXN]);
-void tokenizer(char *buffer, int *tokens, char *delimiter);
+void tokenizer(char *buffer, int *tokens, char *delimiter, int length);

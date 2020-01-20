@@ -86,28 +86,25 @@ int matching(int numSquadre, int championship[MAXN][MAXN])
 }
 
 //tokenizes a string into tokens delimited by a given delimiter char, and convert into int array
-void tokenizer(char *buffer, int *tokens, char *delimiter)
+void tokenizer(char *buffer, int *tokens, char *delimiter, int length)
 {
-    //fprintf(stderr, "posizione 20: %d", buffer[20]);
     // split
     char *delim = delimiter;
 
     char *ptr;
     int tokenIndex;
     ptr = strtok(buffer, delim);
-    //char *b;
-    //long l = strtol(ptr, &b, 10);
-    //tokens[0] = l;  //cast str to int (implicit by long to int)
+    char *b;
+    long l = strtol(ptr, &b, 10);
+    tokens[0] = l;  //cast str to int (implicit by long to int)
     //fprintf(stderr, "%d | ", tokens[0]);
     tokenIndex = 1;
-
-    while (ptr != NULL)
-    {
+    int i;
+    for(i = 0; i < length; i++) {
         ptr = strtok(NULL, delim);
-        //l = strtol(ptr, &b, 10);
-        //tokens[tokenIndex] = l; //cast str to int (implicit by long to int)
+        l = strtol(ptr, &b, 10);
+        tokens[tokenIndex] = l; //cast str to int (implicit by long to int)
         //fprintf(stderr, "%d %d | ", tokens[tokenIndex], tokenIndex);
         tokenIndex++;
     }
-    //fprintf(stderr, "\nfinish\n");
 }

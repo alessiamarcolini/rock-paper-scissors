@@ -133,6 +133,11 @@ int main(int argc, char *argv[])
                         }
                     }
                 }
+                if (!even)
+                {
+                    score[playersNumber - 1] = -1;
+                    differencePoints[playersNumber - 1] = -1000000;
+                }
 
                 fprintf(stderr, "\n");
                 for (j = 0; j < playersNumber; j++)
@@ -212,13 +217,13 @@ int main(int argc, char *argv[])
     //leaderboard calculation
 
     int leaderboard[8];
-    int parityCheck[8];
+    int parityCheck[playersNumber];
     int playersInParity[playersNumber]; // points
 
     int max;
     for (i = 0; i < 8; i++)
     {
-        for (j = 0; j < 8; j++)
+        for (j = 0; j < playersNumber; j++)
         {
             parityCheck[j] = -1;
             playersInParity[j] = -1;
@@ -246,7 +251,7 @@ int main(int argc, char *argv[])
         if (parityCount == 1)
 
         { // only one max
-            for (j = 0; j < 8; j++)
+            for (j = 0; j < playersNumber; j++)
             {
                 if (parityCheck[j] == 1)
                 {
@@ -260,11 +265,11 @@ int main(int argc, char *argv[])
         else // more than one player with same points
         {
             printf("1. risolvo pari in score - parity count %d\n", parityCount);
-            for (j = 0; j < 8; j++)
+            for (j = 0; j < playersNumber; j++)
             {
                 if (parityCheck[j] == 1)
                 {
-                    for (k = j + 1; k < 8; k++)
+                    for (k = j + 1; k < playersNumber; k++)
                     {
                         if (parityCheck[k] == 1)
                         {
@@ -423,7 +428,7 @@ int main(int argc, char *argv[])
                 }
                 for (j = 0; j < playersNumber; j++)
                 {
-                    if (differencePoints[j] == max)
+                    if (differencePoints[j] == max && playersInParity2[j] == 1)
                     {
                         parityCount++;
                         playersInParity3[j] = 1;
@@ -444,32 +449,34 @@ int main(int argc, char *argv[])
                 }
                 else
                 {
-                    printf("3. risolvo pari in diff - parity count %d\n", parityCount);
+                    printf("3. risolvo pari in diff - parity count %d, max:%d\n", parityCount, max);
                     //sorteggio
                     int sortedIndex;
                     // paritycount contiene quanti squadre pari ho
-                    for (k = 0; k < parityCount; k++)
+                    //for (k = 0; k < parityCount; k++)
+                    //{
+                    sortedIndex = rand() % parityCount;
+                    printf("sorted index %d\n", sortedIndex);
+                    for (j = 0; j < playersNumber; j++)
                     {
-                        sortedIndex = rand() % parityCount - k;
-                        for (j = 0; j < playersNumber; j++)
+                        if (playersInParity3[j] == 1)
                         {
-                            if (playersInParity3[j] == 1)
+                            if (sortedIndex == 0)
                             {
-                                if (sortedIndex == 0)
-                                {
-                                    leaderboard[i] = j;
-                                    score[j] = -1;
-                                    printf("sto inserendo fase 4 j=%d\n", j);
-                                    i++;
-                                }
-                                else
-                                {
-                                    sortedIndex--;
-                                }
+                                leaderboard[i] = j;
+                                score[j] = -1;
+                                printf("sto inserendo fase 4 j=%d\n", j);
+                                break;
+                                //i++;
+                            }
+                            else
+                            {
+                                sortedIndex--;
                             }
                         }
                     }
-                    i--;
+                    //}
+                    //i--;
                 }
             }
         }

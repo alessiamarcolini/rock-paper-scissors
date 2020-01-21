@@ -36,8 +36,8 @@ int main(int argc, char *argv[])
     int nParity = 0;
 
     /* Intializes random number generator */
-    //srand(time(0));
-    srand(1);
+    srand(time(0));
+    //srand(2);
 
     if (strcmp(firstPlayerId, "99") != 0 && strcmp(secondPlayerId, "99") != 0)
     {

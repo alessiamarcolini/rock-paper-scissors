@@ -36,14 +36,16 @@ int main(int argc, char *argv[])
     //arrays for calculate rate and parity
     int score[playersNumber];
     int differencePoints[playersNumber];
-    int scoreBoard[playersNumber][playersNumber]; //dove salveremo i punteggi d'andata per poi sommarli al ritorno, utili per il calcolo degli scontri diretti
+    int scoreBoardA[playersNumber][playersNumber]; //dove salveremo i punteggi d'andata
+    int scoreBoardR[playersNumber][playersNumber]; //dove salveremo i punteggi di ritorno
 
     //initialization of score board matrix
     for (i = 0; i < playersNumber; i++)
     {
         for (j = 0; j < playersNumber; j++)
         {
-            scoreBoard[i][j] = 0;
+            scoreBoardA[i][j] = 0;
+            scoreBoardR[i][j] = 0;
         }
     }
 
@@ -118,8 +120,17 @@ int main(int argc, char *argv[])
                         score[externalPlayer] = score[externalPlayer] + resultsTokenized[j * MAINSTREAMLEN + 4];                                         //resultsTokenized[2] = secondPlayerId, resultsTokenized[4] = sumPointsSecondPlayer
                         differencePoints[externalPlayer] = differencePoints[externalPlayer] + winSecondPlayer - resultsTokenized[j * MAINSTREAMLEN + 8]; //resultsTokenized[6] = numberOfWinSecondPlayer, resultsTokenized[8] = numberOfLoseSecondPlayer
 
-                        scoreBoard[homePlayer][externalPlayer] += winFirstPlayer;
-                        scoreBoard[externalPlayer][homePlayer] += winSecondPlayer;
+                        if (k == 0)
+                        {
+                            // andata
+                            scoreBoardA[homePlayer][externalPlayer] += winFirstPlayer;
+                            scoreBoardA[externalPlayer][homePlayer] += winSecondPlayer;
+                        }
+                        else if (k == 1)
+                        {
+                            scoreBoardR[homePlayer][externalPlayer] += winFirstPlayer;
+                            scoreBoardR[externalPlayer][homePlayer] += winSecondPlayer;
+                        }
                     }
                 }
 
@@ -179,14 +190,169 @@ int main(int argc, char *argv[])
             }
         }
     }
-    printf("\n");
+    printf("\nandata\n");
     for (i = 0; i < playersNumber; i++)
     {
         for (j = 0; j < playersNumber; j++)
         {
-            printf("i: %d, j: %d: , value: %d\n", i, j, scoreBoard[i][j]);
+            printf("i: %d, j: %d: , value: %d\n", i, j, scoreBoardA[i][j]);
         }
         printf("\n");
     }
+    printf("\nritorno\n");
+    for (i = 0; i < playersNumber; i++)
+    {
+        for (j = 0; j < playersNumber; j++)
+        {
+            printf("i: %d, j: %d: , value: %d\n", i, j, scoreBoardR[i][j]);
+        }
+        printf("\n");
+    }
+
+    //leaderboard calculation
+
+    int leaderboard[8];
+    int parityCheck[8];
+    int playersInParity[playersNumber]; // points
+
+    int max;
+    for (i = 0; i < 8; i++)
+    {
+        for (j = 0; j < 8; j++)
+        {
+            parityCheck[j] = -1;
+            playersInParity[j] = -1;
+        }
+        max = -1;
+        int parityCount = 0;
+
+        for (j = 0; j < playersNumber; j++)
+        {
+            if (score[j] > max)
+            {
+                max = score[j];
+                //score[j] = -1;
+            }
+        }
+
+        for (j = 0; j < playersNumber; j++)
+        {
+            if (score[j] == max)
+            {
+                parityCheck[j] = 1;
+                parityCount++;
+            }
+        }
+        if (parityCount == 1)
+        { // only one max
+            for (j = 0; j < 8; j++)
+            {
+                if (parityCheck[j] == 1)
+                {
+                    leaderboard[i] = j;
+                    break;
+                }
+            }
+        }
+        else // more than one player with same points
+        {
+            for (j = 0; j < 8; j++)
+            {
+                if (parityCheck[j] == 1)
+                {
+                    for (k = j + 1; k < 8; k++)
+                    {
+                        if (parityCheck[k] == 1)
+                        {
+                            // scontro j vs k
+                            // calcolo sia andata che ritorno
+                            if (scoreBoardA[j][k] > scoreBoardA[k][j])
+                            {
+                                if (playersInParity[j] == -1)
+                                {
+                                    playersInParity[j] = 2;
+                                }
+                                else
+                                {
+                                    playersInParity[j] += 2;
+                                }
+                            }
+                            else if (scoreBoardA[j][k] == scoreBoardA[k][j])
+                            {
+                                if (playersInParity[j] == -1)
+                                {
+                                    playersInParity[j] = 1;
+                                }
+                                else
+                                {
+                                    playersInParity[j]++;
+                                }
+                                if (playersInParity[k] == -1)
+                                {
+                                    playersInParity[k] = 1;
+                                }
+                                else
+                                {
+                                    playersInParity[k]++;
+                                }
+                            }
+                            else
+                            {
+                                if (playersInParity[k] == -1)
+                                {
+                                    playersInParity[k] = 2;
+                                }
+                                else
+                                {
+                                    playersInParity[k] += 2;
+                                }
+                            }
+                            if (scoreBoardR[j][k] > scoreBoardR[k][j])
+                            {
+                                if (playersInParity[j] == -1)
+                                {
+                                    playersInParity[j] = 2;
+                                }
+                                else
+                                {
+                                    playersInParity[j] += 2;
+                                }
+                            }
+                            else if (scoreBoardR[j][k] == scoreBoardR[k][j])
+                            {
+                                if (playersInParity[j] == -1)
+                                {
+                                    playersInParity[j] = 1;
+                                }
+                                else
+                                {
+                                    playersInParity[j]++;
+                                }
+                                if (playersInParity[k] == -1)
+                                {
+                                    playersInParity[k] = 1;
+                                }
+                                else
+                                {
+                                    playersInParity[k]++;
+                                }
+                            }
+                            else if (playersInParity[k] == -1)
+                            {
+                                playersInParity[k] = 2;
+                            }
+                            else
+                            {
+                                playersInParity[k] += 2;
+                            }
+                            {
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     return 0;
 }

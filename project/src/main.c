@@ -489,5 +489,12 @@ int main(int argc, char *argv[])
         printf("%d ", leaderboard[i]);
     }
 
+    permute(leaderboard, 8);
+
+    printf("after permute!!\n");
+    for (i = 0; i < 8; i++)
+    {
+        printf("%d ", leaderboard[i]);
+    }
     return 0;
 }

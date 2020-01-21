@@ -23,3 +23,5 @@ typedef enum rockPaperScissor outcome;
 
 int matching(int numSquadre, int championship[MAXN][MAXN], int even);
 void tokenizer(char *buffer, int *tokens, char *delimiter, int length);
+void swap(int *a, int *b);
+void permute(int arr[], int n);

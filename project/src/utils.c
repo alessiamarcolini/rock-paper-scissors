@@ -113,3 +113,33 @@ void tokenizer(char *buffer, int *tokens, char *delimiter, int length)
         tokenIndex++;
     }
 }
+
+// swap the value of two variables
+void swap(int *a, int *b)
+{
+    int c = *a;
+    *a = *b;
+    *b = c;
+}
+
+void printArray(int arr[], int n)
+{
+    int i;
+    for (i = 0; i < n; i++)
+    {
+        printf("%d ", arr[i]);
+    }
+}
+
+// randomly permute the array passed as parameter
+void permute(int arr[], int n)
+{
+    int i, j, k;
+    for (i = 0; i < 100; i++)
+    {
+        j = rand() % n;
+        k = rand() % n;
+
+        swap(&arr[j], &arr[k]);
+    }
+}

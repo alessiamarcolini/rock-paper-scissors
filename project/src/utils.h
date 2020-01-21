@@ -9,6 +9,9 @@
 
 #define MAX_TEAMS 32U
 
+#define READ 0  /* read-side of pipes */
+#define WRITE 1 /* write-side of pipes */
+
 #define TRUE 1
 #define FALSE 0
 

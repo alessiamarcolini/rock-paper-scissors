@@ -4,9 +4,6 @@
 #include <unistd.h>
 #include "utils.h"
 
-#define READ 0  /* read-side of pipes */
-#define WRITE 1 /* write-side of pipes */
-
 int bytesRead;
 char message[MAXLEN];
 

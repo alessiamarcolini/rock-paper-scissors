@@ -4,9 +4,6 @@
 #include <stdlib.h>
 #include "utils.h"
 
-#define READ 0  /* read-side of pipes */
-#define WRITE 1 /* write-side of pipes */
-
 int championship[MAXN][MAXN];
 
 int fd[2], bytesRead;

@@ -7,8 +7,9 @@
 int squadre[MAX_TEAMS];
 int calendario[MAX_TEAMS][MAX_TEAMS];
 
-int matching(int numSquadre, int championship[MAXN][MAXN])
+int matching(int numSquadre, int championship[MAXN][MAXN], int even)
 {
+
     int pivot, giornate;
     int Shift = 1;
     int i, first, temp;
@@ -18,6 +19,10 @@ int matching(int numSquadre, int championship[MAXN][MAXN])
     for (i = 0; i < numSquadre; i++)
     {
         squadre[i] = i;
+    }
+    if (!even)
+    {
+        squadre[numSquadre - 1] = 99;
     }
 
     temp = squadre[pivot];
@@ -70,17 +75,16 @@ int matching(int numSquadre, int championship[MAXN][MAXN])
     }
 
     //puts("**********************************************************************\n");
-    /*
-    for (i = 0; i <= numSquadre; ++i)
-    {
-        size_t j;
-        for (j = 0; j <= numSquadre; ++j)
-        {
-            printf("%2d ", calendario[i][j]);
-        }
-        puts("");
-    }
-    */
+
+    //for (i = 0; i <= numSquadre; ++i)
+    //{
+    //    size_t j;
+    //    for (j = 0; j <= numSquadre; ++j)
+    //    {
+    //        printf("%2d ", calendario[i][j]);
+    //    }
+    //    puts("");
+    //}
 
     return EXIT_SUCCESS;
 }
@@ -96,11 +100,12 @@ void tokenizer(char *buffer, int *tokens, char *delimiter, int length)
     ptr = strtok(buffer, delim);
     char *b;
     long l = strtol(ptr, &b, 10);
-    tokens[0] = l;  //cast str to int (implicit by long to int)
+    tokens[0] = l; //cast str to int (implicit by long to int)
     //fprintf(stderr, "%d | ", tokens[0]);
     tokenIndex = 1;
     int i;
-    for(i = 0; i < length; i++) {
+    for (i = 0; i < length; i++)
+    {
         ptr = strtok(NULL, delim);
         l = strtol(ptr, &b, 10);
         tokens[tokenIndex] = l; //cast str to int (implicit by long to int)

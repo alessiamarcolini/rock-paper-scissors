@@ -4,10 +4,13 @@
 #endif
 
 #define MAXN 100000
-#define MAXLEN 7000 // max len of message
+#define MAXLEN 7000      // max len of message
 #define MAINSTREAMLEN 10 //length of number parameter passing by match->day->main
 
 #define MAX_TEAMS 32U
+
+#define TRUE 1
+#define FALSE 0
 
 enum rockPaperScissor
 {
@@ -18,5 +21,5 @@ enum rockPaperScissor
 
 typedef enum rockPaperScissor outcome;
 
-int matching(int numSquadre, int championship[MAXN][MAXN]);
+int matching(int numSquadre, int championship[MAXN][MAXN], int even);
 void tokenizer(char *buffer, int *tokens, char *delimiter, int length);

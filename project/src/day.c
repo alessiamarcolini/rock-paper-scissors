@@ -13,7 +13,7 @@ char message[MAXLEN];
 int main(int argc, char *argv[])
 {
     int playersNumber = atoi(argv[1]);
-    char* season = argv[argc-1];
+    char *season = argv[argc - 1];
     //printf("sono la giornata\n");
     //printf("%s\n", argv[1]);
     int i;
@@ -47,13 +47,16 @@ int main(int argc, char *argv[])
             //convert i to a string
             char str[12];
             sprintf(str, "%d", i);
-            
+
             char *firstPlayer;
             char *secondPlayer;
-            if(strcmp(season, "A") == 0) {
+            if (strcmp(season, "A") == 0)
+            {
                 firstPlayer = argv[i * 2 + 2];
                 secondPlayer = argv[i * 2 + 3];
-            } else {
+            }
+            else
+            {
                 firstPlayer = argv[i * 2 + 3];
                 secondPlayer = argv[i * 2 + 2];
             }

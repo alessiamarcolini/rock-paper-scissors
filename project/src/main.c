@@ -244,18 +244,22 @@ int main(int argc, char *argv[])
             }
         }
         if (parityCount == 1)
+
         { // only one max
             for (j = 0; j < 8; j++)
             {
                 if (parityCheck[j] == 1)
                 {
                     leaderboard[i] = j;
+                    score[j] = -1;
+                    printf("sto inserendo fase 1 j=%d\n", j);
                     break;
                 }
             }
         }
         else // more than one player with same points
         {
+            printf("1. risolvo pari in score - parity count %d\n", parityCount);
             for (j = 0; j < 8; j++)
             {
                 if (parityCheck[j] == 1)
@@ -351,7 +355,131 @@ int main(int argc, char *argv[])
                     }
                 }
             }
+            // check players still in parity
+            // find max
+
+            max = -1;
+            parityCount = 0;
+            int playersInParity2[playersNumber];
+
+            for (j = 0; j < playersNumber; j++)
+            {
+                playersInParity2[j] = -1;
+            }
+
+            for (j = 0; j < playersNumber; j++)
+            {
+                if (playersInParity[j] != -1)
+                {
+                    if (playersInParity[j] > max)
+                    {
+                        max = playersInParity[j];
+                    }
+                }
+            }
+            for (j = 0; j < playersNumber; j++)
+            {
+                if (playersInParity[j] == max)
+                {
+                    parityCount++;
+
+                    playersInParity2[j] = 1; // store still in parity
+                }
+            }
+            if (parityCount == 1) // found first one
+            {
+                for (j = 0; j < playersNumber; j++)
+
+                {
+                    printf("p1:%d\tp2:%d ", playersInParity[j], playersInParity2[j]);
+                    if (playersInParity2[j] == 1)
+                    {
+                        leaderboard[i] = j;
+                        score[j] = -1;
+                        printf("sto inserendo fase 2 j=%d\n", j);
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                printf("2. risolvo pari in score board - parity count %d\n", parityCount);
+                max = -10000;
+                parityCount = 0;
+                for (j = 0; j < playersNumber; j++)
+                {
+                    if (playersInParity2[j] == 1)
+                    {
+                        if (differencePoints[j] > max)
+                        {
+                            max = differencePoints[j];
+                        }
+                    }
+                }
+                int playersInParity3[playersNumber];
+                for (j = 0; j < playersNumber; j++)
+                {
+                    playersInParity3[j] = -1;
+                }
+                for (j = 0; j < playersNumber; j++)
+                {
+                    if (differencePoints[j] == max)
+                    {
+                        parityCount++;
+                        playersInParity3[j] = 1;
+                    }
+                }
+                if (parityCount == 1)
+                {
+                    for (j = 0; j < playersNumber; j++)
+                    {
+                        if (playersInParity3[j] == 1)
+                        {
+                            leaderboard[i] = j;
+                            score[j] = -1;
+                            printf("sto inserendo fase 3 j=%d\n", j);
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    printf("3. risolvo pari in diff - parity count %d\n", parityCount);
+                    //sorteggio
+                    int sortedIndex;
+                    // paritycount contiene quanti squadre pari ho
+                    for (k = 0; k < parityCount; k++)
+                    {
+                        sortedIndex = rand() % parityCount - k;
+                        for (j = 0; j < playersNumber; j++)
+                        {
+                            if (playersInParity3[j] == 1)
+                            {
+                                if (sortedIndex == 0)
+                                {
+                                    leaderboard[i] = j;
+                                    score[j] = -1;
+                                    printf("sto inserendo fase 4 j=%d\n", j);
+                                    i++;
+                                }
+                                else
+                                {
+                                    sortedIndex--;
+                                }
+                            }
+                        }
+                    }
+                    i--;
+                }
+            }
         }
+    }
+
+    /////// we got the classifica
+    printf("classifica!!\n");
+    for (i = 0; i < 8; i++)
+    {
+        printf("%d ", leaderboard[i]);
     }
 
     return 0;

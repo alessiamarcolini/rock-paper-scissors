@@ -495,9 +495,6 @@ int main(int argc, char *argv[])
     }
 
     // quarterfinals
-    int firstPlayer;
-    int secondPlayer;
-    int winner;
 
     pipe(fd);
     pid = fork();
@@ -510,16 +507,24 @@ int main(int argc, char *argv[])
         bytesRead = read(fd[READ], messageQuarters, MAXLEN);
         fprintf(stderr, "\n- main2: Read %d bytes: \n%s", bytesRead, messageQuarters);
 
-        /*int messageTokenized[(MAINSTREAMLEN)*4]; // *(playersNumber/2) dovuto al fatto che legge tutto lo stream della giornata, e non il singolo match
-        tokenizer(messageQuarters, messageTokenized, " ", (MAINSTREAMLEN)*4);
+        char *messageTokenized[MAINSTREAMLEN * 4]; // *(playersNumber/2) dovuto al fatto che legge tutto lo stream della giornata, e non il singolo match
+        //tokenizer(messageQuarters, messageTokenized, " ", (MAINSTREAMLEN)*4);
+        tokenizerMultipleDelimiter(messageQuarters, messageTokenized);
+
+        for (j = 0; j < 4 * 4; j++)
+        {
+            fprintf(stderr, "%s ", messageTokenized[j]);
+        }
 
         for (j = 0; j < 4; j++)
         {
-            firstPlayer = messageTokenized[j * MAINSTREAMLEN + 1];
-            secondPlayer = messageTokenized[j * MAINSTREAMLEN + 2];
-            winner = messageTokenized[j * MAINSTREAMLEN + 3];
-            fprintf(stderr, "winner: %d\n", winner);
-        }*/
+            char *firstPlayer = messageTokenized[j * 4 + 1];
+            char *secondPlayer = messageTokenized[j * 4 + 2];
+            char *winner = messageTokenized[j * 4 + 3];
+            fprintf(stderr, "first: %s - ", firstPlayer);
+            fprintf(stderr, "second: %s - ", secondPlayer);
+            fprintf(stderr, "winner: %s\n", winner);
+        }
     }
     else
     {

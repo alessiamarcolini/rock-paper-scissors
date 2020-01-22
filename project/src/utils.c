@@ -114,6 +114,25 @@ void tokenizer(char *buffer, int *tokens, char *delimiter, int length)
     }
 }
 
+void tokenizerMultipleDelimiter(char *buffer, char *tokens[MAINSTREAMLEN * 4])
+{
+
+    char delimit[] = " \t\r\n\v\f"; // 2) POSIX whitespace characters
+    char *token = strtok(buffer, delimit);
+    tokens[0] = token;
+    //tokens[0] = strtok(NULL, delimit);
+
+    // Keep printing tokens while one of the
+    // delimiters present in str[].
+    int i = 0;
+    while (tokens[i] != NULL)
+    {
+        printf("%s ", tokens[i]);
+        i++;
+        tokens[i] = strtok(NULL, delimit);
+    }
+}
+
 // swap the value of two variables
 void swap(int *a, int *b)
 {

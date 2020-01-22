@@ -20,10 +20,7 @@ int main(int argc, char *argv[])
 
     for (i = 0; i < nQuarters; i++)
     {
-        if (i != 0)
-        {
-            waitpid(pid, &status, 0);
-        }
+
         //sleep(1);
         int fd[2];
         pipe(fd);

@@ -8,6 +8,7 @@ int championship[MAXN][MAXN];
 
 int fd[2], bytesRead;
 char message[MAXLEN];
+char messageQuarters[MAXLEN];
 
 char *buffer; // used to convert int to str
 
@@ -148,7 +149,7 @@ int main(int argc, char *argv[])
                 }
                 fprintf(stderr, "\n");
 
-                close(fd[READ]); /* close this side */
+                //close(fd[READ]); /* close this side */
             }
             else
             { // child
@@ -188,7 +189,6 @@ int main(int argc, char *argv[])
                 }
 
                 int e = execv(paramList[0], paramList);
-                // wait
             }
         }
     }
@@ -491,7 +491,59 @@ int main(int argc, char *argv[])
     printf("after permute!!\n");
     for (i = 0; i < 8; i++)
     {
-        printf("%d ", leaderboard[i]);
+        fprintf(stderr, "%d ", leaderboard[i]);
     }
+
+    // quarterfinals
+    int firstPlayer;
+    int secondPlayer;
+    int winner;
+
+    pid = fork();
+
+    if (pid > 0)
+    {
+        close(fd[WRITE]);
+        //open(fd[READ]);
+        //message[0] = '\0';
+        bytesRead = read(fd[READ], messageQuarters, MAXLEN);
+        fprintf(stderr, "\n- main2: Read %d bytes: \n%s", bytesRead, messageQuarters);
+
+        /*int messageTokenized[(MAINSTREAMLEN)*4]; // *(playersNumber/2) dovuto al fatto che legge tutto lo stream della giornata, e non il singolo match
+        tokenizer(messageQuarters, messageTokenized, " ", (MAINSTREAMLEN)*4);
+
+        for (j = 0; j < 4; j++)
+        {
+            firstPlayer = messageTokenized[j * MAINSTREAMLEN + 1];
+            secondPlayer = messageTokenized[j * MAINSTREAMLEN + 2];
+            winner = messageTokenized[j * MAINSTREAMLEN + 3];
+            fprintf(stderr, "winner: %d\n", winner);
+        }*/
+    }
+    else
+    {
+        dup2(fd[WRITE], WRITE);
+        close(fd[READ]);
+        close(fd[WRITE]);
+
+        char *paramList[8 + 3];
+
+        paramList[0] = "bin/quarterFinals";
+        paramList[1] = "8";
+        paramList[playersNumber + 3] = NULL;
+
+        for (i = 0; i < 8; i++)
+        {
+            snprintf(buffer, 1024, "%d", leaderboard[i]);
+
+            paramList[i + 2] = malloc(sizeof(char) * 1024);
+            // TODO: fix memory leak
+            strcpy(paramList[i + 2], buffer);
+        }
+
+        int e = execv(paramList[0], paramList);
+    }
+    waitpid(pid, &status, 0);
+
     return 0;
 }

@@ -5,7 +5,7 @@ CFLAGS = -std=gnu90
 
 default: help
 
-objects = bin/utils.o bin/day bin/match bin/main
+objects = bin/utils.o bin/day bin/match bin/quarterFinals bin/quarter bin/main
 
 bin: $(objects)
 
@@ -25,6 +25,12 @@ bin/day: src/day.c bin/utils.o
 
 bin/match: src/match.c 
 	$(CC) $(CFLAGS) -o bin/match src/match.c
+
+bin/quarterFinals: src/quarterFinals.c
+	$(CC) $(CFLAGS) -o bin/quarterFinals src/quarterFinals.c
+
+bin/quarter: src/quarter.c
+	$(CC) $(CFLAGS) -o bin/quarter src/quarter.c
 
 bin/utils.o: src/utils.c
 	$(CC) $(CFLAGS) -c -o bin/utils.o src/utils.c

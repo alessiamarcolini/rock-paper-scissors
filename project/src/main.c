@@ -511,18 +511,14 @@ int main(int argc, char *argv[])
         //tokenizer(messageQuarters, messageTokenized, " ", (MAINSTREAMLEN)*4);
         tokenizerMultipleDelimiter(messageQuarters, messageTokenized);
 
-        for (j = 0; j < 4 * 4; j++)
-        {
-            fprintf(stderr, "%s ", messageTokenized[j]);
-        }
+        char *winners[4];
 
         for (j = 0; j < 4; j++)
         {
             char *firstPlayer = messageTokenized[j * 4 + 1];
             char *secondPlayer = messageTokenized[j * 4 + 2];
             char *winner = messageTokenized[j * 4 + 3];
-            fprintf(stderr, "first: %s - ", firstPlayer);
-            fprintf(stderr, "second: %s - ", secondPlayer);
+            winners[j] = winner;
             fprintf(stderr, "winner: %s\n", winner);
         }
     }

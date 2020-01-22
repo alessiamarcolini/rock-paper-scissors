@@ -499,6 +499,7 @@ int main(int argc, char *argv[])
     int secondPlayer;
     int winner;
 
+    pipe(fd);
     pid = fork();
 
     if (pid > 0)

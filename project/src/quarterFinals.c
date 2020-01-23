@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
             sprintf(buffer, "%s\n", message); // dayId|message // TODO: mandare in blocco!!!!
             messageToSendByLine[i] = malloc(sizeof(char) * 1024);
             strcpy(messageToSendByLine[i], buffer);
-
+            free(buffer);
             close(fd[READ]);
         }
         else
@@ -67,6 +67,11 @@ int main(int argc, char *argv[])
         strcat(messageToSend, messageToSendByLine[i]);
     }
     printf("%s", messageToSend);
+
+    for (i = 0; i < nQuarters / 2; i++)
+    {
+        free(messageToSendByLine[i]);
+    }
 
     return 0;
 }

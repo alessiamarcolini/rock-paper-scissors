@@ -36,8 +36,18 @@ int main(int argc, char *argv[])
     }
 
     buffer = malloc(sizeof(char) * 1024);
+    if (buffer == NULL)
+    {
+        fprintf(stderr, "Malloc failure: dinamic memory allocation not possible.\n");
+        exit(6);
+    }
 
     char *playersNumber_str = malloc(sizeof(char) * 1024);
+    if (playersNumber_str == NULL)
+    {
+        fprintf(stderr, "Malloc failure: dinamic memory allocation not possible.\n");
+        exit(6);
+    }
     int playersNumber = atoi(argv[1]);
 
     // check if player number is >= 8
@@ -76,10 +86,10 @@ int main(int argc, char *argv[])
 
     //initialization of score array and points difference array
     for (i = 0; i < playersNumber; i++)
-    { //da deallocare
-        //score[i] = malloc(sizeof(int) * 1024);
+    {
+
         score[i] = 0;
-        //differencePoints[i] = malloc(sizeof(int) * 1024);
+
         differencePoints[i] = 0;
     }
 
@@ -110,7 +120,7 @@ int main(int argc, char *argv[])
             int e = pipe(fd);
             if (e < 0)
             {
-                printf("Error pipe: %s\n", strerror(errno));
+                fprintf(stderr, "Error pipe: %s\n", strerror(errno));
                 exit(5);
             }
 
@@ -214,7 +224,11 @@ int main(int argc, char *argv[])
                     snprintf(buffer, 1024, "%d", championship[i][j]);
 
                     paramList[j + 2] = malloc(sizeof(char) * 1024);
-                    // TODO: fix memory leak
+                    if (paramList[j + 2] == NULL)
+                    {
+                        fprintf(stderr, "Malloc failure: dinamic memory allocation not possible.\n");
+                        exit(6);
+                    }
                     strcpy(paramList[j + 2], buffer);
                     //fprintf(stderr, "-----%s-----", buffer);
                     //paramList[j + 2] = buffer;
@@ -224,7 +238,7 @@ int main(int argc, char *argv[])
                 int e = execv(paramList[0], paramList);
                 if (e < 0)
                 {
-                    printf("Error execv: %s\n", strerror(errno));
+                    fprintf(stderr, "Error execv: %s\n", strerror(errno));
                     exit(4);
                 }
             }
@@ -539,7 +553,7 @@ int main(int argc, char *argv[])
     int e = pipe(fd);
     if (e < 0)
     {
-        printf("Error pipe: %s\n", strerror(errno));
+        fprintf(stderr, "Error pipe: %s\n", strerror(errno));
         exit(5);
     }
     pid = fork();
@@ -587,14 +601,19 @@ int main(int argc, char *argv[])
             snprintf(buffer, 1024, "%d", leaderboard[i]);
 
             paramList[i + 2] = malloc(sizeof(char) * 1024);
-            // TODO: fix memory leak
+            if (paramList[j + 2] == NULL)
+            {
+                fprintf(stderr, "Malloc failure: dinamic memory allocation not possible.\n");
+                exit(6);
+            }
+
             strcpy(paramList[i + 2], buffer);
         }
 
         int e = execv(paramList[0], paramList);
         if (e < 0)
         {
-            printf("Error execv: %s\n", strerror(errno));
+            fprintf(stderr, "Error execv: %s\n", strerror(errno));
             exit(4);
         }
     }
@@ -605,7 +624,7 @@ int main(int argc, char *argv[])
     int e = pipe(fd);
     if (e < 0)
     {
-        printf("Error pipe: %s\n", strerror(errno));
+        fprintf(stderr, "Error pipe: %s\n", strerror(errno));
         exit(5);
     }
     pid = fork();
@@ -655,14 +674,18 @@ int main(int argc, char *argv[])
             //snprintf(buffer, 1024, "%d", leaderboard[i]);
 
             paramList[i + 2] = malloc(sizeof(char) * 1024);
-            // TODO: fix memory leak
+            if (paramList[j + 2] == NULL)
+            {
+                fprintf(stderr, "Malloc failure: dinamic memory allocation not possible.\n");
+                exit(6);
+            }
             strcpy(paramList[i + 2], winnersQuarters[i]);
         }
 
         int e = execv(paramList[0], paramList);
         if (e < 0)
         {
-            printf("Error execv: %s\n", strerror(errno));
+            fprintf(stderr, "Error execv: %s\n", strerror(errno));
             exit(4);
         }
     }
@@ -675,7 +698,7 @@ int main(int argc, char *argv[])
     int e = pipe(fd);
     if (e < 0)
     {
-        printf("Error pipe: %s\n", strerror(errno));
+        fprintf(stderr, "Error pipe: %s\n", strerror(errno));
         exit(5);
     }
     pid = fork();
@@ -717,14 +740,18 @@ int main(int argc, char *argv[])
         {
 
             paramList[i + 2] = malloc(sizeof(char) * 1024);
-            // TODO: fix memory leak
+            if (paramList[j + 2] == NULL)
+            {
+                fprintf(stderr, "Malloc failure: dinamic memory allocation not possible.\n");
+                exit(6);
+            }
             strcpy(paramList[i + 2], winnersSemiFinals[i]);
         }
 
         int e = execv(paramList[0], paramList);
         if (e < 0)
         {
-            printf("Error execv: %s\n", strerror(errno));
+            fprintf(stderr, "Error execv: %s\n", strerror(errno));
             exit(4);
         }
     }

@@ -14,6 +14,11 @@ char *buffer;
 int main(int argc, char *argv[])
 {
     buffer = malloc(sizeof(char) * 1024);
+    if (buffer == NULL)
+    {
+        fprintf(stderr, "Malloc failure: dinamic memory allocation not possible.\n");
+        exit(6);
+    }
     int i;
 
     pid_t pid;
@@ -27,7 +32,7 @@ int main(int argc, char *argv[])
         int e = pipe(fd);
         if (e < 0)
         {
-            printf("Error pipe: %s\n", strerror(errno));
+            fprintf(stderr, "Error pipe: %s\n", strerror(errno));
             exit(5);
         }
         pid = fork();
@@ -46,6 +51,11 @@ int main(int argc, char *argv[])
 
             sprintf(buffer, "%s\n", message); // dayId|message
             messageToSendByLine[i] = malloc(sizeof(char) * 1024);
+            if (messageToSendByLine[i] == NULL)
+            {
+                fprintf(stderr, "Malloc failure: dinamic memory allocation not possible.\n");
+                exit(6);
+            }
             strcpy(messageToSendByLine[i], buffer);
             free(buffer);
             close(fd[READ]);
@@ -70,7 +80,7 @@ int main(int argc, char *argv[])
             int e = execv(paramList[0], paramList);
             if (e < 0)
             {
-                printf("Error execv: %s\n", strerror(errno));
+                fprintf(stderr, "Error execv: %s\n", strerror(errno));
                 exit(4);
             }
         }

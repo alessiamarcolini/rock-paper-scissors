@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
     int e = pipe(fd);
     if (e < 0)
     {
-        printf("Error pipe: %s\n", strerror(errno));
+        fprintf(stderr, "Error pipe: %s\n", strerror(errno));
         exit(5);
     }
 
@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
         int e = execv(paramList[0], paramList);
         if (e < 0)
         {
-            printf("Error execv: %s\n", strerror(errno));
+            fprintf(stderr, "Error execv: %s\n", strerror(errno));
             exit(4);
         }
     }

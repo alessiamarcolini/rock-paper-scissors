@@ -22,10 +22,30 @@ int even;
 
 int main(int argc, char *argv[])
 {
+    char *param = argv[1];
+
+    // check if number of players is an integer
+    for (i = 0; param[i] != '\0'; i++)
+    {
+        if (!isdigit(param[i]))
+        {
+            fprintf(stderr, "You must specify an integer number of players!\n");
+            exit(1);
+        }
+    }
+
     buffer = malloc(sizeof(char) * 1024);
 
     char *playersNumber_str = malloc(sizeof(char) * 1024);
     int playersNumber = atoi(argv[1]);
+
+    // check if player number is >= 8
+    if (playersNumber < 8)
+    {
+        fprintf(stderr, "You need at least 8 players!\n");
+        exit(2);
+    }
+
     if (playersNumber % 2 != 0)
     {
         even = FALSE;

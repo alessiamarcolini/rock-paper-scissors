@@ -2,6 +2,7 @@
 #include <sys/types.h>
 #include <string.h>
 #include <stdlib.h>
+#include <errno.h>
 #include "utils.h"
 
 int championship[MAXN][MAXN];
@@ -216,6 +217,10 @@ int main(int argc, char *argv[])
                 }
 
                 int e = execv(paramList[0], paramList);
+                if (e < 0)
+                {
+                    printf("Error execv: %s\n", strerror(errno));
+                }
             }
         }
     }
@@ -576,6 +581,10 @@ int main(int argc, char *argv[])
         }
 
         int e = execv(paramList[0], paramList);
+        if (e < 0)
+        {
+            printf("Error execv: %s\n", strerror(errno));
+        }
     }
     waitpid(pid, &status, 0);
 
@@ -634,6 +643,10 @@ int main(int argc, char *argv[])
         }
 
         int e = execv(paramList[0], paramList);
+        if (e < 0)
+        {
+            printf("Error execv: %s\n", strerror(errno));
+        }
     }
     waitpid(pid, &status, 0);
 
@@ -686,6 +699,10 @@ int main(int argc, char *argv[])
         }
 
         int e = execv(paramList[0], paramList);
+        if (e < 0)
+        {
+            printf("Error execv: %s\n", strerror(errno));
+        }
     }
     waitpid(pid, &status, 0);
 

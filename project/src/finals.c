@@ -2,6 +2,7 @@
 #include <sys/types.h>
 #include <string.h>
 #include <stdlib.h>
+#include <errno.h>
 #include "utils.h"
 
 int bytesRead;
@@ -56,6 +57,10 @@ int main(int argc, char *argv[])
 
         char *const paramList[] = {"bin/final", str, firstPlayer, secondPlayer, NULL};
         int e = execv(paramList[0], paramList);
+        if (e < 0)
+        {
+            printf("Error execv: %s\n", strerror(errno));
+        }
     }
 
     return 0;

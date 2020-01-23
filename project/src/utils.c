@@ -127,7 +127,7 @@ void tokenizerMultipleDelimiter(char *buffer, char *tokens[MAINSTREAMLEN * 4])
     int i = 0;
     while (tokens[i] != NULL)
     {
-        printf("%s ", tokens[i]);
+        //fprintf(stderr, "%s ", tokens[i]);
         i++;
         tokens[i] = strtok(NULL, delimit);
     }

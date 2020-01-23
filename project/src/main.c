@@ -9,6 +9,13 @@ int championship[MAXN][MAXN];
 int fd[2], bytesRead;
 char message[MAXLEN];
 char messageQuarters[MAXLEN];
+char messageSemiFinals[MAXLEN];
+
+const int nQuarters = 4;
+const int nSemiFinals = 2;
+
+char *winnersQuarters[nQuarters];
+char *winnersSemiFinals[nSemiFinals];
 
 char *buffer; // used to convert int to str
 
@@ -507,18 +514,16 @@ int main(int argc, char *argv[])
         bytesRead = read(fd[READ], messageQuarters, MAXLEN);
         fprintf(stderr, "\n- main2: Read %d bytes: \n%s", bytesRead, messageQuarters);
 
-        char *messageTokenized[MAINSTREAMLEN * 4]; // *(playersNumber/2) dovuto al fatto che legge tutto lo stream della giornata, e non il singolo match
+        char *messageTokenized[MAINSTREAMLEN * nQuarters]; // *(playersNumber/2) dovuto al fatto che legge tutto lo stream della giornata, e non il singolo match
         //tokenizer(messageQuarters, messageTokenized, " ", (MAINSTREAMLEN)*4);
         tokenizerMultipleDelimiter(messageQuarters, messageTokenized);
 
-        char *winners[4];
-
-        for (j = 0; j < 4; j++)
+        for (j = 0; j < nQuarters; j++)
         {
-            char *firstPlayer = messageTokenized[j * 4 + 1];
-            char *secondPlayer = messageTokenized[j * 4 + 2];
-            char *winner = messageTokenized[j * 4 + 3];
-            winners[j] = winner;
+            char *firstPlayer = messageTokenized[j * nQuarters + 1];
+            char *secondPlayer = messageTokenized[j * nQuarters + 2];
+            char *winner = messageTokenized[j * nQuarters + 3];
+            winnersQuarters[j] = winner;
             fprintf(stderr, "winner: %s\n", winner);
         }
     }
@@ -528,7 +533,7 @@ int main(int argc, char *argv[])
         close(fd[READ]);
         close(fd[WRITE]);
 
-        char *paramList[8 + 3];
+        char *paramList[nQuarters * 2 + 3];
 
         paramList[0] = "bin/quarterFinals";
         paramList[1] = "8";
@@ -541,6 +546,58 @@ int main(int argc, char *argv[])
             paramList[i + 2] = malloc(sizeof(char) * 1024);
             // TODO: fix memory leak
             strcpy(paramList[i + 2], buffer);
+        }
+
+        int e = execv(paramList[0], paramList);
+    }
+    waitpid(pid, &status, 0);
+
+    // semi finals
+    pipe(fd);
+    pid = fork();
+
+    if (pid > 0)
+    {
+        close(fd[WRITE]);
+        //open(fd[READ]);
+        //message[0] = '\0';
+        bytesRead = read(fd[READ], messageSemiFinals, MAXLEN);
+        fprintf(stderr, "\n- main3: Read %d bytes: \n%s", bytesRead, messageSemiFinals);
+
+        char *messageTokenized[MAINSTREAMLEN * 4]; // *(playersNumber/2) dovuto al fatto che legge tutto lo stream della giornata, e non il singolo match
+        //tokenizer(messageSemiFinals, messageTokenized, " ", (MAINSTREAMLEN)*4);
+        tokenizerMultipleDelimiter(messageSemiFinals, messageTokenized);
+
+        for (j = 0; j < nSemiFinals; j++)
+        {
+            char *firstPlayer = messageTokenized[j * 4 + 1];
+            char *secondPlayer = messageTokenized[j * 4 + 2];
+            char *winner = messageTokenized[j * 4 + 3];
+            winnersSemiFinals[j] = winner;
+            fprintf(stderr, "winner: %s\n", winner);
+        }
+    }
+    else
+    {
+        dup2(fd[WRITE], WRITE);
+        close(fd[READ]);
+        close(fd[WRITE]);
+
+        char *paramList[nSemiFinals * 2 + 3];
+
+        paramList[0] = "bin/semiFinals";
+        paramList[1] = "4";
+        paramList[playersNumber + 3] = NULL;
+
+        fprintf(stderr, "sto creando semifinals\n");
+
+        for (i = 0; i < nSemiFinals * 2; i++)
+        {
+            //snprintf(buffer, 1024, "%d", leaderboard[i]);
+
+            paramList[i + 2] = malloc(sizeof(char) * 1024);
+            // TODO: fix memory leak
+            strcpy(paramList[i + 2], winnersQuarters[i]);
         }
 
         int e = execv(paramList[0], paramList);

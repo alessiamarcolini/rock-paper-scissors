@@ -26,6 +26,11 @@ int main(int argc, char *argv[])
         int fd[2];
         pipe(fd); /* Create unnamed pipe */
         pid_t pid = fork();
+        if (pid == -1)
+        {
+            fprintf(stderr, "Error while forking.\n");
+            exit(3);
+        }
 
         if (pid > 0)
         { // day

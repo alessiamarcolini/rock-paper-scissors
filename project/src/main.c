@@ -110,6 +110,12 @@ int main(int argc, char *argv[])
 
             pid = fork();
 
+            if (pid == -1)
+            {
+                fprintf(stderr, "Error while forking.\n");
+                exit(3);
+            }
+
             if (pid > 0)
             { // parent
                 close(fd[WRITE]);
@@ -521,6 +527,11 @@ int main(int argc, char *argv[])
 
     pipe(fd);
     pid = fork();
+    if (pid == -1)
+    {
+        fprintf(stderr, "Error while forking.\n");
+        exit(3);
+    }
 
     if (pid > 0)
     {
@@ -572,6 +583,11 @@ int main(int argc, char *argv[])
     printf("SEMI FINALS\n");
     pipe(fd);
     pid = fork();
+    if (pid == -1)
+    {
+        fprintf(stderr, "Error while forking.\n");
+        exit(3);
+    }
 
     if (pid > 0)
     {
@@ -627,6 +643,11 @@ int main(int argc, char *argv[])
 
     pipe(fd);
     pid = fork();
+    if (pid == -1)
+    {
+        fprintf(stderr, "Error while forking.\n");
+        exit(3);
+    }
 
     if (pid > 0)
     {

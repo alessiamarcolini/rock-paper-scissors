@@ -24,6 +24,11 @@ int main(int argc, char *argv[])
         int fd[2];
         pipe(fd);
         pid = fork();
+        if (pid == -1)
+        {
+            fprintf(stderr, "Error while forking.\n");
+            exit(3);
+        }
 
         if (pid > 0)
         { // quarters

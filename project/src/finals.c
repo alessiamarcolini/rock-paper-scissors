@@ -18,6 +18,11 @@ int main(int argc, char *argv[])
     int fd[2];
     pipe(fd);
     pid = fork();
+    if (pid == -1)
+    {
+        fprintf(stderr, "Error while forking.\n");
+        exit(3);
+    }
 
     if (pid > 0)
     { //
@@ -28,7 +33,7 @@ int main(int argc, char *argv[])
 
         //sprintf(buffer, "%s\n", message); // dayId|message
         printf("%s\n", message);
-        //messageToSendByLine[i] = malloc(sizeof(char) * 1024);
+
         //strcpy(messageToSendByLine[i], buffer);
 
         close(fd[READ]);

@@ -29,6 +29,7 @@ int main(int argc, char *argv[])
         if (e < 0)
         {
             printf("Error pipe: %s\n", strerror(errno));
+            exit(5);
         }
 
         pid_t pid = fork();
@@ -80,6 +81,7 @@ int main(int argc, char *argv[])
             if (e < 0)
             {
                 printf("Error execv: %s\n", strerror(errno));
+                exit(4);
             }
         }
     }

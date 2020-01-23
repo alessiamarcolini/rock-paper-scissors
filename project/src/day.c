@@ -76,6 +76,7 @@ int main(int argc, char *argv[])
         strcat(messageToSend, messageToSendByLine[i]);
     }
     printf("%s", messageToSend);
+    free(buffer);
 
     return 0;
 }

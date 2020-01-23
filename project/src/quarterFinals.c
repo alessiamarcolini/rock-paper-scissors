@@ -14,7 +14,6 @@ int main(int argc, char *argv[])
 {
     buffer = malloc(sizeof(char) * 1024);
     int i;
-    int nQuarters = 4;
     pid_t pid;
     int status; // return status of child
 

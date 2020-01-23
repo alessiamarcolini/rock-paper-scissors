@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
             sprintf(buffer, "%s\n", message); // dayId|message
             messageToSendByLine[i] = malloc(sizeof(char) * 1024);
             strcpy(messageToSendByLine[i], buffer);
-
+            free(buffer);
             close(fd[READ]);
         }
         else
@@ -67,6 +67,11 @@ int main(int argc, char *argv[])
     }
 
     printf("%s", messageToSend);
+
+    for (i = 0; i < nSemiFinals; i++)
+    {
+        free(messageToSendByLine[i]);
+    }
 
     return 0;
 }

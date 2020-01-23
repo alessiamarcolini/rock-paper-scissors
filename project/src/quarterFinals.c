@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
     }
     printf("%s", messageToSend);
 
-    for (i = 0; i < nQuarters / 2; i++)
+    for (i = 0; i < nQuarters; i++)
     {
         free(messageToSendByLine[i]);
     }

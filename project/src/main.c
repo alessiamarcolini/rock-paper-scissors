@@ -648,5 +648,6 @@ int main(int argc, char *argv[])
     }
     waitpid(pid, &status, 0);
 
+    free(buffer);
     return 0;
 }

@@ -42,7 +42,6 @@ int main(int argc, char *argv[])
             fprintf(stderr, "Error reading from pipe.\n");
             exit(8);
         }
-        //printf("quarters - read %d bytes: %s\n", bytesRead, message);
 
         //sprintf(buffer, "%s\n", message); // dayId|message
         printf("%s\n", message);
@@ -53,7 +52,12 @@ int main(int argc, char *argv[])
     }
     else
     { // single "semi final"
-        dup2(fd[WRITE], WRITE);
+        int e = dup2(fd[WRITE], WRITE);
+        if (e < 0)
+        {
+            fprintf(stderr, "Error while duplicating file descriptor: %s\n", strerror(errno));
+            exit(10);
+        }
         close(fd[READ]);
         close(fd[WRITE]);
 
@@ -68,7 +72,7 @@ int main(int argc, char *argv[])
         secondPlayer = argv[3];
 
         char *const paramList[] = {"bin/final", str, firstPlayer, secondPlayer, NULL};
-        int e = execv(paramList[0], paramList);
+        e = execv(paramList[0], paramList);
         if (e < 0)
         {
             fprintf(stderr, "Error execv: %s\n", strerror(errno));

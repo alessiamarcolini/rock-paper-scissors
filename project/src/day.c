@@ -70,7 +70,12 @@ int main(int argc, char *argv[])
         else
         { // match
             //printf("%d\n", fd);
-            dup2(fd[WRITE], WRITE);
+            int e = dup2(fd[WRITE], WRITE);
+            if (e < 0)
+            {
+                fprintf(stderr, "Error while duplicating file descriptor: %s\n", strerror(errno));
+                exit(10);
+            }
             close(fd[READ]);
             close(fd[WRITE]);
 
@@ -92,7 +97,7 @@ int main(int argc, char *argv[])
             }
 
             char *const paramList[] = {"bin/match", str, firstPlayer, secondPlayer, NULL};
-            int e = execv(paramList[0], paramList);
+            e = execv(paramList[0], paramList);
             if (e < 0)
             {
                 fprintf(stderr, "Error execv: %s\n", strerror(errno));

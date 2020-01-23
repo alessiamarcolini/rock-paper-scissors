@@ -208,7 +208,12 @@ int main(int argc, char *argv[])
             else
             { // child
                 //printf("%d\n", fd);
-                dup2(fd[WRITE], WRITE);
+                int e = dup2(fd[WRITE], WRITE);
+                if (e < 0)
+                {
+                    fprintf(stderr, "Error while duplicating file descriptor: %s\n", strerror(errno));
+                    exit(10);
+                }
                 close(fd[READ]);
                 close(fd[WRITE]);
                 //char *const paramList[] = {"bin/day", playersNumber_str, NULL};
@@ -246,7 +251,7 @@ int main(int argc, char *argv[])
                     //buffer[0] = '\0';
                 }
 
-                int e = execv(paramList[0], paramList);
+                e = execv(paramList[0], paramList);
                 if (e < 0)
                 {
                     fprintf(stderr, "Error execv: %s\n", strerror(errno));
@@ -602,7 +607,12 @@ int main(int argc, char *argv[])
     }
     else
     {
-        dup2(fd[WRITE], WRITE);
+        int e = dup2(fd[WRITE], WRITE);
+        if (e < 0)
+        {
+            fprintf(stderr, "Error while duplicating file descriptor: %s\n", strerror(errno));
+            exit(10);
+        }
         close(fd[READ]);
         close(fd[WRITE]);
 
@@ -626,7 +636,7 @@ int main(int argc, char *argv[])
             strcpy(paramList[i + 2], buffer);
         }
 
-        int e = execv(paramList[0], paramList);
+        e = execv(paramList[0], paramList);
         if (e < 0)
         {
             fprintf(stderr, "Error execv: %s\n", strerror(errno));
@@ -683,7 +693,12 @@ int main(int argc, char *argv[])
     }
     else
     {
-        dup2(fd[WRITE], WRITE);
+        int e = dup2(fd[WRITE], WRITE);
+        if (e < 0)
+        {
+            fprintf(stderr, "Error while duplicating file descriptor: %s\n", strerror(errno));
+            exit(10);
+        }
         close(fd[READ]);
         close(fd[WRITE]);
 
@@ -708,7 +723,7 @@ int main(int argc, char *argv[])
             strcpy(paramList[i + 2], winnersQuarters[i]);
         }
 
-        int e = execv(paramList[0], paramList);
+        e = execv(paramList[0], paramList);
         if (e < 0)
         {
             fprintf(stderr, "Error execv: %s\n", strerror(errno));
@@ -762,7 +777,12 @@ int main(int argc, char *argv[])
     }
     else
     {
-        dup2(fd[WRITE], WRITE);
+        int e = dup2(fd[WRITE], WRITE);
+        if (e < 0)
+        {
+            fprintf(stderr, "Error while duplicating file descriptor: %s\n", strerror(errno));
+            exit(10);
+        }
         close(fd[READ]);
         close(fd[WRITE]);
 
@@ -784,7 +804,7 @@ int main(int argc, char *argv[])
             strcpy(paramList[i + 2], winnersSemiFinals[i]);
         }
 
-        int e = execv(paramList[0], paramList);
+        e = execv(paramList[0], paramList);
         if (e < 0)
         {
             fprintf(stderr, "Error execv: %s\n", strerror(errno));

@@ -37,6 +37,7 @@ int main(int argc, char *argv[])
             sprintf(buffer, "%d %s\n", i, message); // dayId|message // TODO: mandare in blocco!!!!
             messageToSendByLine[i] = malloc(sizeof(char) * 1024);
             strcpy(messageToSendByLine[i], buffer);
+            free(buffer);
             close(fd[READ]); /* close this side */
             free(buffer);
         }
@@ -78,7 +79,12 @@ int main(int argc, char *argv[])
     }
     printf("%s", messageToSend);
 
+<<<<<<< HEAD
     for (i = 0; i < playersNumber / 2; i++) {
+=======
+    for (i = 0; i < playersNumber / 2; i++)
+    {
+>>>>>>> fix-free
         free(messageToSendByLine[i]);
     }
 

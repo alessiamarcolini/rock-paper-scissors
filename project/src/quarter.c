@@ -6,8 +6,11 @@ int main(int argc, char *argv[])
 {
 
     char *quarterId = argv[1];
+    fprintf(stderr, "quarter %s - ", quarterId);
     char *firstPlayerId = argv[2];
     char *secondPlayerId = argv[3];
+    fprintf(stderr, "first %s - ", firstPlayerId);
+    fprintf(stderr, "second %s - ", secondPlayerId);
 
     //printf("first: %s - second: %s\n", firstPlayerId, secondPlayerId);
 
@@ -16,7 +19,7 @@ int main(int argc, char *argv[])
 
     srand(time(0));
 
-    char *winner = malloc(sizeof(char) * 10);
+    char *winner; //= malloc(sizeof(char) * 10);
 
     int notParity = FALSE;
 
@@ -24,6 +27,8 @@ int main(int argc, char *argv[])
     {
         first = (outcome)rand() % 3;
         second = (outcome)rand() % 3;
+
+        fprintf(stderr, "out1: %d - ou2: %d\t\t", first, second);
 
         switch (first)
         {
@@ -33,13 +38,13 @@ int main(int argc, char *argv[])
                 winner = firstPlayerId;
 
                 notParity = TRUE;
-                //printf("R S\n");
+                fprintf(stderr, "R S\n");
             }
             else if (second == paper)
             { // second winner
                 winner = secondPlayerId;
                 notParity = TRUE;
-                //printf("R P\n");
+                fprintf(stderr, "R P\n");
             }
             break;
         case paper:
@@ -47,13 +52,13 @@ int main(int argc, char *argv[])
             { // first winner
                 winner = firstPlayerId;
                 notParity = TRUE;
-                //printf("P R\n");
+                fprintf(stderr, "P R\n");
             }
             else if (second == scissor)
             { // second winner
                 winner = secondPlayerId;
                 notParity = TRUE;
-                //printf("P S\n");
+                fprintf(stderr, "P S\n");
             }
             break;
         case scissor:
@@ -61,22 +66,26 @@ int main(int argc, char *argv[])
             { // first winner
                 winner = firstPlayerId;
                 notParity = TRUE;
-                //printf("S P\n");
+                fprintf(stderr, "S P\n");
             }
             else if (second == rock)
             { // second winner
                 winner = secondPlayerId;
                 notParity = TRUE;
-                //printf("S R\n");
+                fprintf(stderr, "S R\n");
             }
             break;
         }
     } while (!notParity);
 
-    //printf("the winner is: %s\n", winner);
+    fprintf(stderr, "the winner is: %s\n", winner);
     printf("%s %s %s %s\n", quarterId, firstPlayerId, secondPlayerId, winner);
 
+<<<<<<< HEAD
     free(winner);
+=======
+    //free(winner);
+>>>>>>> fix-free
 
     return 0;
 }

@@ -15,7 +15,10 @@ int main(int argc, char *argv[])
     buffer = malloc(sizeof(char) * 1024);
     int i;
 
+<<<<<<< HEAD
     //int nSemiFinals = 2;
+=======
+>>>>>>> fix-free
     pid_t pid;
     int status; // return status of child
 
@@ -37,7 +40,7 @@ int main(int argc, char *argv[])
             sprintf(buffer, "%s\n", message); // dayId|message
             messageToSendByLine[i] = malloc(sizeof(char) * 1024);
             strcpy(messageToSendByLine[i], buffer);
-
+            free(buffer);
             close(fd[READ]);
 
             free(buffer);
@@ -71,6 +74,11 @@ int main(int argc, char *argv[])
     }
 
     printf("%s", messageToSend);
+
+    for (i = 0; i < nSemiFinals; i++)
+    {
+        free(messageToSendByLine[i]);
+    }
 
     return 0;
 }

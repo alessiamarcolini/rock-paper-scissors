@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
 
     srand(time(0));
 
-    char *winner = malloc(sizeof(char) * 10);
+    char *winner; // = malloc(sizeof(char) * 10);
 
     int notParity = FALSE;
 

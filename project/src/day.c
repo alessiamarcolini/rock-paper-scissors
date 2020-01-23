@@ -50,6 +50,11 @@ int main(int argc, char *argv[])
 
             close(fd[WRITE]); /* close other side */
             bytesRead = read(fd[READ], message, MAXLEN);
+            if (bytesRead <= 0)
+            {
+                fprintf(stderr, "Error reading from pipe.\n");
+                exit(8);
+            }
 
             sprintf(buffer, "%d %s\n", i, message); // dayId|message // TODO: mandare in blocco!!!!
             messageToSendByLine[i] = malloc(sizeof(char) * 1024);

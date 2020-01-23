@@ -69,6 +69,10 @@ int main(int argc, char *argv[])
                 //printf("S R\n");
             }
             break;
+        default:
+            fprintf(stderr, "Something weird happened during play.\n");
+            exit(7);
+            break;
         }
     } while (!notParity);
 

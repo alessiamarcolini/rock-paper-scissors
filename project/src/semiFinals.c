@@ -47,7 +47,11 @@ int main(int argc, char *argv[])
 
             close(fd[WRITE]);
             bytesRead = read(fd[READ], message, MAXLEN);
-            //printf("quarters - read %d bytes: %s\n", bytesRead, message);
+            if (bytesRead <= 0)
+            {
+                fprintf(stderr, "Error reading from pipe.\n");
+                exit(8);
+            }
 
             sprintf(buffer, "%s\n", message); // dayId|message
             messageToSendByLine[i] = malloc(sizeof(char) * 1024);

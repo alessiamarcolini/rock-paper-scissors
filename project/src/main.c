@@ -107,6 +107,7 @@ int main(int argc, char *argv[])
     }
 
     pid_t pid;
+    pid_t wait_pid;
     int status; // return status of child
 
     for (k = 0; k < 2; k++)
@@ -115,7 +116,12 @@ int main(int argc, char *argv[])
         {
             if (i != 0)
             {
-                waitpid(pid, &status, 0);
+                wait_pid = waitpid(pid, &status, 0);
+                if (wait_pid == -1)
+                {
+                    fprintf(stderr, "Child process failed.\n");
+                    exit(8);
+                }
             }
             int e = pipe(fd);
             if (e < 0)
@@ -136,6 +142,11 @@ int main(int argc, char *argv[])
             { // parent
                 close(fd[WRITE]);
                 bytesRead = read(fd[READ], message, MAXLEN);
+                if (bytesRead <= 0)
+                {
+                    fprintf(stderr, "Error reading from pipe.\n");
+                    exit(8);
+                }
                 fprintf(stderr, "\n- main: Read %d bytes: \n%s", bytesRead, message);
 
                 //parsing and upload on the points structures
@@ -569,6 +580,11 @@ int main(int argc, char *argv[])
         //open(fd[READ]);
         //message[0] = '\0';
         bytesRead = read(fd[READ], messageQuarters, MAXLEN);
+        if (bytesRead <= 0)
+        {
+            fprintf(stderr, "Error reading from pipe.\n");
+            exit(8);
+        }
         fprintf(stderr, "\n- main2: Read %d bytes: \n%s", bytesRead, messageQuarters);
 
         char *messageTokenized[MAINSTREAMLEN * nQuarters]; // *(playersNumber/2) dovuto al fatto che legge tutto lo stream della giornata, e non il singolo match
@@ -601,7 +617,7 @@ int main(int argc, char *argv[])
             snprintf(buffer, 1024, "%d", leaderboard[i]);
 
             paramList[i + 2] = malloc(sizeof(char) * 1024);
-            if (paramList[j + 2] == NULL)
+            if (paramList[i + 2] == NULL)
             {
                 fprintf(stderr, "Malloc failure: dinamic memory allocation not possible.\n");
                 exit(6);
@@ -617,11 +633,16 @@ int main(int argc, char *argv[])
             exit(4);
         }
     }
-    waitpid(pid, &status, 0);
+    wait_pid = waitpid(pid, &status, 0);
+    if (wait_pid == -1)
+    {
+        fprintf(stderr, "Child process failed.\n");
+        exit(8);
+    }
 
     // semi finals
     printf("SEMI FINALS\n");
-    int e = pipe(fd);
+    e = pipe(fd);
     if (e < 0)
     {
         fprintf(stderr, "Error pipe: %s\n", strerror(errno));
@@ -640,6 +661,11 @@ int main(int argc, char *argv[])
         //open(fd[READ]);
         //message[0] = '\0';
         bytesRead = read(fd[READ], messageSemiFinals, MAXLEN);
+        if (bytesRead <= 0)
+        {
+            fprintf(stderr, "Error reading from pipe.\n");
+            exit(8);
+        }
         fprintf(stderr, "\n- main3: Read %d bytes: \n%s", bytesRead, messageSemiFinals);
 
         char *messageTokenized[MAINSTREAMLEN * 4]; // *(playersNumber/2) dovuto al fatto che legge tutto lo stream della giornata, e non il singolo match
@@ -674,7 +700,7 @@ int main(int argc, char *argv[])
             //snprintf(buffer, 1024, "%d", leaderboard[i]);
 
             paramList[i + 2] = malloc(sizeof(char) * 1024);
-            if (paramList[j + 2] == NULL)
+            if (paramList[i + 2] == NULL)
             {
                 fprintf(stderr, "Malloc failure: dinamic memory allocation not possible.\n");
                 exit(6);
@@ -689,13 +715,18 @@ int main(int argc, char *argv[])
             exit(4);
         }
     }
-    waitpid(pid, &status, 0);
+    wait_pid = waitpid(pid, &status, 0);
+    if (wait_pid == -1)
+    {
+        fprintf(stderr, "Child process failed.\n");
+        exit(8);
+    }
 
     // finals
 
     printf("FINALI\n");
 
-    int e = pipe(fd);
+    e = pipe(fd);
     if (e < 0)
     {
         fprintf(stderr, "Error pipe: %s\n", strerror(errno));
@@ -714,6 +745,11 @@ int main(int argc, char *argv[])
         //open(fd[READ]);
         //message[0] = '\0';
         bytesRead = read(fd[READ], messageFinals, MAXLEN);
+        if (bytesRead <= 0)
+        {
+            fprintf(stderr, "Error reading from pipe.\n");
+            exit(8);
+        }
         fprintf(stderr, "\n- main4: Read %d bytes: \n%s", bytesRead, messageFinals);
 
         char *messageTokenized[MAINSTREAMLEN * 1]; // *(playersNumber/2) dovuto al fatto che legge tutto lo stream della giornata, e non il singolo match
@@ -740,7 +776,7 @@ int main(int argc, char *argv[])
         {
 
             paramList[i + 2] = malloc(sizeof(char) * 1024);
-            if (paramList[j + 2] == NULL)
+            if (paramList[i + 2] == NULL)
             {
                 fprintf(stderr, "Malloc failure: dinamic memory allocation not possible.\n");
                 exit(6);
@@ -755,7 +791,12 @@ int main(int argc, char *argv[])
             exit(4);
         }
     }
-    waitpid(pid, &status, 0);
+    wait_pid = waitpid(pid, &status, 0);
+    if (wait_pid == -1)
+    {
+        fprintf(stderr, "Child process failed.\n");
+        exit(8);
+    }
 
     free(buffer);
     return 0;

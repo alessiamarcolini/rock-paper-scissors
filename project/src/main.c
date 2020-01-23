@@ -107,7 +107,11 @@ int main(int argc, char *argv[])
             {
                 waitpid(pid, &status, 0);
             }
-            pipe(fd);
+            int e = pipe(fd);
+            if (e < 0)
+            {
+                printf("Error pipe: %s\n", strerror(errno));
+            }
 
             pid = fork();
 
@@ -530,7 +534,11 @@ int main(int argc, char *argv[])
 
     printf("QUARTER FINALS\n");
 
-    pipe(fd);
+    int e = pipe(fd);
+    if (e < 0)
+    {
+        printf("Error pipe: %s\n", strerror(errno));
+    }
     pid = fork();
     if (pid == -1)
     {
@@ -590,7 +598,11 @@ int main(int argc, char *argv[])
 
     // semi finals
     printf("SEMI FINALS\n");
-    pipe(fd);
+    int e = pipe(fd);
+    if (e < 0)
+    {
+        printf("Error pipe: %s\n", strerror(errno));
+    }
     pid = fork();
     if (pid == -1)
     {
@@ -654,7 +666,11 @@ int main(int argc, char *argv[])
 
     printf("FINALI\n");
 
-    pipe(fd);
+    int e = pipe(fd);
+    if (e < 0)
+    {
+        printf("Error pipe: %s\n", strerror(errno));
+    }
     pid = fork();
     if (pid == -1)
     {

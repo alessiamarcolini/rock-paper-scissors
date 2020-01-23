@@ -25,7 +25,12 @@ int main(int argc, char *argv[])
     {
         //sleep(1);
         int fd[2];
-        pipe(fd); /* Create unnamed pipe */
+        int e = pipe(fd);
+        if (e < 0)
+        {
+            printf("Error pipe: %s\n", strerror(errno));
+        }
+
         pid_t pid = fork();
         if (pid == -1)
         {

@@ -10,6 +10,7 @@ int fd[2], bytesRead;
 char message[MAXLEN];
 char messageQuarters[MAXLEN];
 char messageSemiFinals[MAXLEN];
+char messageFinals[MAXLEN];
 
 const int nQuarters = 4;
 const int nSemiFinals = 2;
@@ -503,6 +504,8 @@ int main(int argc, char *argv[])
 
     // quarterfinals
 
+    printf("QUARTER FINALS\n");
+
     pipe(fd);
     pid = fork();
 
@@ -553,6 +556,7 @@ int main(int argc, char *argv[])
     waitpid(pid, &status, 0);
 
     // semi finals
+    printf("SEMI FINALS\n");
     pipe(fd);
     pid = fork();
 
@@ -598,6 +602,52 @@ int main(int argc, char *argv[])
             paramList[i + 2] = malloc(sizeof(char) * 1024);
             // TODO: fix memory leak
             strcpy(paramList[i + 2], winnersQuarters[i]);
+        }
+
+        int e = execv(paramList[0], paramList);
+    }
+    waitpid(pid, &status, 0);
+
+    // finals
+
+    printf("FINALI\n");
+    pipe(fd);
+    pid = fork();
+
+    if (pid > 0)
+    {
+        close(fd[WRITE]);
+        //open(fd[READ]);
+        //message[0] = '\0';
+        bytesRead = read(fd[READ], messageFinals, MAXLEN);
+        fprintf(stderr, "\n- main4: Read %d bytes: \n%s", bytesRead, messageFinals);
+
+        char *messageTokenized[MAINSTREAMLEN * 1]; // *(playersNumber/2) dovuto al fatto che legge tutto lo stream della giornata, e non il singolo match
+        tokenizerMultipleDelimiter(messageFinals, messageTokenized);
+
+        char *firstPlayer = messageTokenized[1];
+        char *secondPlayer = messageTokenized[2];
+        char *winner = messageTokenized[3];
+        fprintf(stderr, "winner: %s\n", winner);
+    }
+    else
+    {
+        dup2(fd[WRITE], WRITE);
+        close(fd[READ]);
+        close(fd[WRITE]);
+
+        char *paramList[2 + 3];
+
+        paramList[0] = "bin/finals";
+        paramList[1] = "2";
+        paramList[playersNumber + 3] = NULL;
+
+        for (i = 0; i < 2; i++)
+        {
+
+            paramList[i + 2] = malloc(sizeof(char) * 1024);
+            // TODO: fix memory leak
+            strcpy(paramList[i + 2], winnersSemiFinals[i]);
         }
 
         int e = execv(paramList[0], paramList);

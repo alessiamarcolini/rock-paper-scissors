@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
     for (i = 0; i < nQuarters; i++)
     {
 
-        sleep(1);
+        //sleep(1);
         int fd[2];
         pipe(fd);
         pid = fork();

@@ -4,8 +4,8 @@
 #include <string.h>
 #include "utils.h"
 
-int squadre[MAX_TEAMS];
-int calendario[MAX_TEAMS][MAX_TEAMS];
+int squadre[MAXN];
+int calendario[MAXN][MAXN];
 
 int matching(int numSquadre, int championship[MAXN][MAXN], int even)
 {

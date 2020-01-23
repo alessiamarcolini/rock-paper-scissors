@@ -12,9 +12,6 @@ char messageQuarters[MAXLEN];
 char messageSemiFinals[MAXLEN];
 char messageFinals[MAXLEN];
 
-const int nQuarters = 4;
-const int nSemiFinals = 2;
-
 char *winnersQuarters[nQuarters];
 char *winnersSemiFinals[nSemiFinals];
 
@@ -26,6 +23,7 @@ int even;
 int main(int argc, char *argv[])
 {
     buffer = malloc(sizeof(char) * 1024);
+
     char *playersNumber_str = malloc(sizeof(char) * 1024);
     int playersNumber = atoi(argv[1]);
     if (playersNumber % 2 != 0)
@@ -88,24 +86,19 @@ int main(int argc, char *argv[])
             {
                 waitpid(pid, &status, 0);
             }
-            pipe(fd); /* Create unnamed pipe */
-            //printf("\n\nSto forkando\n");
+            pipe(fd);
 
             pid = fork();
 
             if (pid > 0)
-            {                     // parent
-                close(fd[WRITE]); /* close other side */
+            { // parent
+                close(fd[WRITE]);
                 bytesRead = read(fd[READ], message, MAXLEN);
                 fprintf(stderr, "\n- main: Read %d bytes: \n%s", bytesRead, message);
 
                 //parsing and upload on the points structures
                 int resultsTokenized[(MAINSTREAMLEN) * (playersNumber / 2)]; // *(playersNumber/2) dovuto al fatto che legge tutto lo stream della giornata, e non il singolo match
                 tokenizer(message, resultsTokenized, " ", (MAINSTREAMLEN) * (playersNumber / 2));
-                /*fprintf(stderr, "\n- tokenized array: ");
-                for(j = 0; j < MAINSTREAMLEN*(playersNumber/2); j++) {
-                    fprintf(stderr, "%d -", resultsTokenized[j]);
-                }*/
 
                 int homePlayer;
                 int externalPlayer;
@@ -157,7 +150,7 @@ int main(int argc, char *argv[])
                 }
                 fprintf(stderr, "\n");
 
-                //close(fd[READ]); /* close this side */
+                //close(fd[READ]);
             }
             else
             { // child
@@ -611,6 +604,7 @@ int main(int argc, char *argv[])
     // finals
 
     printf("FINALI\n");
+
     pipe(fd);
     pid = fork();
 

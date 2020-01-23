@@ -3,7 +3,7 @@
 
 #endif
 
-#define MAXN 100000
+#define MAXN 1000
 #define MAXLEN 7000      // max len of message
 #define MAINSTREAMLEN 10 //length of number parameter passing by match->day->main
 
@@ -14,6 +14,9 @@
 
 #define TRUE 1
 #define FALSE 0
+
+#define nQuarters 4
+#define nSemiFinals 2
 
 enum rockPaperScissor
 {

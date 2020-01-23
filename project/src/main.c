@@ -12,9 +12,6 @@ char messageQuarters[MAXLEN];
 char messageSemiFinals[MAXLEN];
 char messageFinals[MAXLEN];
 
-const int nQuarters = 4;
-const int nSemiFinals = 2;
-
 char *winnersQuarters[nQuarters];
 char *winnersSemiFinals[nSemiFinals];
 
@@ -57,10 +54,8 @@ int main(int argc, char *argv[])
 
     //initialization of score array and points difference array
     for (i = 0; i < playersNumber; i++)
-    { //da deallocare
-        //score[i] = malloc(sizeof(int) * 1024);
+    {
         score[i] = 0;
-        //differencePoints[i] = malloc(sizeof(int) * 1024);
         differencePoints[i] = 0;
     }
 
@@ -171,6 +166,9 @@ int main(int argc, char *argv[])
 
                 paramList[0] = "bin/day";
                 paramList[1] = playersNumber_str;
+
+                free(playersNumber_str);
+
                 if (k == 0)
                 {
                     paramList[playersNumber + 2] = "A";
@@ -197,6 +195,10 @@ int main(int argc, char *argv[])
                 }
 
                 int e = execv(paramList[0], paramList);
+
+                for(i = 0; i < playersNumber; i++) {
+                    free(paramList[i]);
+                }
             }
         }
     }
@@ -552,6 +554,10 @@ int main(int argc, char *argv[])
         }
 
         int e = execv(paramList[0], paramList);
+
+        for(i = 0; i < 8; i++) {
+            free(paramList[i + 2]);
+        }
     }
     waitpid(pid, &status, 0);
 
@@ -605,6 +611,10 @@ int main(int argc, char *argv[])
         }
 
         int e = execv(paramList[0], paramList);
+
+        for(i = 0; i < nSemiFinals; i++) {
+            free(paramList[i + 2]);
+        }
     }
     waitpid(pid, &status, 0);
 
@@ -651,8 +661,14 @@ int main(int argc, char *argv[])
         }
 
         int e = execv(paramList[0], paramList);
+
+        for(i = 0; i < 2; i++) {
+            free(paramList[i + 2]);
+        }
     }
     waitpid(pid, &status, 0);
+
+    free(buffer);
 
     return 0;
 }

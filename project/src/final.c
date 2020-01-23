@@ -74,6 +74,6 @@ int main(int argc, char *argv[])
 
     printf("%s %s %s %s\n", finalId, firstPlayerId, secondPlayerId, winner);
 
-    //free(winner);
+    free(winner);
     return 0;
 }

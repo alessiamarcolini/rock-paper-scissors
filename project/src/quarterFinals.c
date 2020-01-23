@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
 {
     buffer = malloc(sizeof(char) * 1024);
     int i;
-    int nQuarters = 4;
+    //int nQuarters = 4;
     pid_t pid;
     int status; // return status of child
 
@@ -38,6 +38,8 @@ int main(int argc, char *argv[])
             strcpy(messageToSendByLine[i], buffer);
 
             close(fd[READ]);
+
+            free(buffer);
         }
         else
         { // single "quarter"
@@ -66,6 +68,7 @@ int main(int argc, char *argv[])
     {
         //printf("%s", messageToSendByLine[i]);
         strcat(messageToSend, messageToSendByLine[i]);
+        free(messageToSendByLine[i]);
     }
     printf("%s", messageToSend);
 

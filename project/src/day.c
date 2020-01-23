@@ -38,6 +38,7 @@ int main(int argc, char *argv[])
             messageToSendByLine[i] = malloc(sizeof(char) * 1024);
             strcpy(messageToSendByLine[i], buffer);
             close(fd[READ]); /* close this side */
+            free(buffer);
         }
         else
         { // match
@@ -76,6 +77,10 @@ int main(int argc, char *argv[])
         strcat(messageToSend, messageToSendByLine[i]);
     }
     printf("%s", messageToSend);
+
+    for (i = 0; i < playersNumber / 2; i++) {
+        free(messageToSendByLine[i]);
+    }
 
     return 0;
 }

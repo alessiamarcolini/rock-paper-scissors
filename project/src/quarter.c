@@ -75,5 +75,8 @@ int main(int argc, char *argv[])
 
     //printf("the winner is: %s\n", winner);
     printf("%s %s %s %s\n", quarterId, firstPlayerId, secondPlayerId, winner);
+
+    free(winner);
+
     return 0;
 }

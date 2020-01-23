@@ -15,6 +15,9 @@
 #define TRUE 1
 #define FALSE 0
 
+#define nQuarters 4
+#define nSemiFinals 2
+
 enum rockPaperScissor
 {
     rock,

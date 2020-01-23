@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
     buffer = malloc(sizeof(char) * 1024);
     int i;
 
-    int nSemiFinals = 2;
+    //int nSemiFinals = 2;
     pid_t pid;
     int status; // return status of child
 
@@ -39,6 +39,8 @@ int main(int argc, char *argv[])
             strcpy(messageToSendByLine[i], buffer);
 
             close(fd[READ]);
+
+            free(buffer);
         }
         else
         { // single "semi final"
@@ -65,6 +67,7 @@ int main(int argc, char *argv[])
     for (i = 0; i < nSemiFinals; i++)
     {
         strcat(messageToSend, messageToSendByLine[i]);
+        free(messageToSendByLine[i]);
     }
 
     printf("%s", messageToSend);

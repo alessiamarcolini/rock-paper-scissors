@@ -82,7 +82,7 @@ int main(int argc, char *argv[])
             firstPlayer = argv[i * 2 + 2];
             secondPlayer = argv[i * 2 + 3];
 
-            char *const paramList[] = {"bin/quarter", str, firstPlayer, secondPlayer, NULL};
+            char *const paramList[] = {"bin/matchSingle", str, firstPlayer, secondPlayer, NULL};
             e = execv(paramList[0], paramList);
             if (e < 0)
             {
@@ -94,7 +94,7 @@ int main(int argc, char *argv[])
 
     char messageToSend[MAXLEN];
     strcat(messageToSend, "");
-    
+
     for (i = 0; i < nQuarters; i++)
     {
         strcat(messageToSend, messageToSendByLine[i]);
@@ -107,6 +107,6 @@ int main(int argc, char *argv[])
     }
 
     free(buffer);
-    
+
     return 0;
 }

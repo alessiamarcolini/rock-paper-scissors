@@ -331,6 +331,8 @@ int main(int argc, char *argv[])
     }
 
     //leaderboard calculation
+    printf(BLUE_CODE "\n----- LEADERBOARD -----\n" RESET_CODE);
+    printf("Calculation...\n");
 
     int leaderboard[8];
     int parityCheck[playersNumber];
@@ -372,6 +374,7 @@ int main(int argc, char *argv[])
                 {
                     leaderboard[i] = j;
                     score[j] = -1;
+                    printf("Place %d: %d\tno parity \n", i, j);
                     break;
                 }
             }
@@ -512,6 +515,7 @@ int main(int argc, char *argv[])
                     {
                         leaderboard[i] = j;
                         score[j] = -1;
+                        printf("Place %d: %d\tparity: solved looking at direct matches points\n", i, j);
                         break;
                     }
                 }
@@ -551,6 +555,7 @@ int main(int argc, char *argv[])
                         {
                             leaderboard[i] = j;
                             score[j] = -1;
+                            printf("Place %d: %d\tparity: solved looking at points difference\n", i, j);
                             break;
                         }
                     }
@@ -571,6 +576,7 @@ int main(int argc, char *argv[])
                             {
                                 leaderboard[i] = j;
                                 score[j] = -1;
+                                printf("Place %d: %d\tparity: resolved by picking a random player\n", i, j);
                                 break;
                             }
                             else
@@ -594,6 +600,7 @@ int main(int argc, char *argv[])
         }
     }
     printf("\n");
+
     permute(leaderboard, 8);
 
     // quarterfinals

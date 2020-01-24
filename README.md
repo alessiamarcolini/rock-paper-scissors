@@ -9,7 +9,15 @@ Progetto del corso di Sistemi Operativi, secondo anno della laurea triennale in 
 | `193868` | Leonardo Berrighi | leonardo.berrighi@studenti.unitn.it |
 | `194274` | Alessia Marcolini | alessia.marcolini@studenti.unitn.it |
 
-## Per eseguire
+## Setup
+```bash
+cd project
+make build
+
+./run 8 
+# oppure
+./run 8 names8.txt
+```
 
 ## Sintesi
 

@@ -13,6 +13,7 @@ char message[MAXLEN];
 char messageQuarters[MAXLEN];
 char messageSemiFinals[MAXLEN];
 char messageFinals[MAXLEN];
+char playersName[16][FILELINELENGTH];
 
 char *winnersQuarters[nQuarters];
 char *winnersSemiFinals[nSemiFinals];
@@ -23,7 +24,14 @@ int i, j, k;
 int even;
 
 int main(int argc, char *argv[])
+
 {
+    if (argc < 2 || argc > 3)
+    {
+        fprintf(stderr, "Wrong number of parameters.\n");
+        exit(11);
+    }
+
     char *param = argv[1];
 
     // check if number of players is an integer
@@ -36,6 +44,77 @@ int main(int argc, char *argv[])
         }
     }
 
+    int playersNumber = atoi(argv[1]);
+
+    // check if player number is >= 8
+    if (playersNumber < 8)
+    {
+        fprintf(stderr, "You need at least 8 players!\n");
+        exit(2);
+    }
+
+    int namedPlayer = 0; //variable for the printing
+
+    if (argc == 3) //so 2 real parameter, the second of these --> fileName
+    {              //file for naming the players
+        char *pathFileNames = argv[2];
+
+        //fprintf(stderr, "Path file: %s\n", pathFileNames); //delete after done
+
+        FILE *fp;
+
+        fp = fopen(pathFileNames, "r"); //open only
+
+        if (fp == NULL)
+        {
+            fprintf(stderr, "File not found.\n");
+            exit(12);
+        }
+
+        char line[FILELINELENGTH];
+
+        //read first line and control if the data coincide with argv[1]
+        fgets(line, sizeof(line), fp);
+
+        //fprintf(stderr, "First line: %s\n", line); //delete after done
+        if (playersNumber != atoi(line))
+        {
+            fprintf(stderr, "Incompatible data found.\n");
+            exit(13);
+        }
+
+        //take data into array and set variable for the printing
+        namedPlayer = 1;
+
+        //char *realLine = NULL;
+        char *lineBuf = NULL;
+        char *pos;
+        size_t lineBufSize = 0;
+        ssize_t lineSize;
+
+        // Get the first line of the file.
+        lineSize = getline(&lineBuf, &lineBufSize, fp);
+
+        // Loop through until we are done with the file
+        i = 0;
+        while (lineSize >= 0)
+        {
+
+            if ((pos = strchr(lineBuf, '\n')) != NULL)
+            {
+                *pos = '\0';
+            }
+
+            strcpy(playersName[i], lineBuf);
+            i++;
+
+            // Get the next line
+            lineSize = getline(&lineBuf, &lineBufSize, fp);
+        }
+
+        free(lineBuf);
+        lineBuf = NULL;
+    }
     buffer = malloc(sizeof(char) * 1024);
     if (buffer == NULL)
     {
@@ -48,14 +127,6 @@ int main(int argc, char *argv[])
     {
         fprintf(stderr, "Malloc failure: dinamic memory allocation not possible.\n");
         exit(6);
-    }
-    int playersNumber = atoi(argv[1]);
-
-    // check if player number is >= 8
-    if (playersNumber < 8)
-    {
-        fprintf(stderr, "You need at least 8 players!\n");
-        exit(2);
     }
 
     if (playersNumber % 2 != 0)
@@ -165,7 +236,14 @@ int main(int argc, char *argv[])
 
                     if (homePlayer != 99 && externalPlayer != 99)
                     {
-                        printf("\t%d vs %d\t\t", homePlayer, externalPlayer);
+                        if (namedPlayer == 1)
+                        {
+                            printf("\t%s vs %s\t\t", playersName[homePlayer], playersName[externalPlayer]);
+                        }
+                        else
+                        {
+                            printf("\t%d vs %d\t\t", homePlayer, externalPlayer);
+                        }
                         winFirstPlayer = resultsTokenized[j * MAINSTREAMLEN + 5];
                         winSecondPlayer = resultsTokenized[j * MAINSTREAMLEN + 6];
                         printf("%d - %d\n", winFirstPlayer, winSecondPlayer);
@@ -191,11 +269,25 @@ int main(int argc, char *argv[])
                     {
                         if (homePlayer == 99)
                         {
-                            printf("\t\tNo match for %d\n", externalPlayer);
+                            if (namedPlayer == 1)
+                            {
+                                printf("\t\tNo match for %s\n", playersName[externalPlayer]);
+                            }
+                            else
+                            {
+                                printf("\t\tNo match for %d\n", externalPlayer);
+                            }
                         }
                         if (externalPlayer == 99)
                         {
-                            printf("\t\tNo match for %d\n", homePlayer);
+                            if (namedPlayer)
+                            {
+                                printf("\t\tNo match for %s\n", playersName[homePlayer]);
+                            }
+                            else
+                            {
+                                printf("\t\tNo match for %d\n", homePlayer);
+                            }
                         }
                     }
                 }
@@ -555,8 +647,15 @@ int main(int argc, char *argv[])
             char *firstSign = messageTokenized[j * 6 + 4];
             char *secondSign = messageTokenized[j * 6 + 5];
 
-            printf("\t%s vs %s\t\t%s - %s\n", firstPlayer, secondPlayer, firstSign, secondSign);
             winnersQuarters[j] = winner;
+            if (namedPlayer == 1)
+            {
+                printf("\t%s vs %s\t\t%s - %s\n", playersName[atoi(firstPlayer)], playersName[atoi(secondPlayer)], firstSign, secondSign);
+            }
+            else
+            {
+                printf("\t%s vs %s\t\t%s - %s\n", firstPlayer, secondPlayer, firstSign, secondSign);
+            }
         }
     }
     else
@@ -608,7 +707,14 @@ int main(int argc, char *argv[])
     printf("\nRemaining players: ");
     for (i = 0; i < nQuarters; i++)
     {
-        printf("%s ", winnersQuarters[i]);
+        if (namedPlayer == 1)
+        {
+            printf("%s ", playersName[atoi(winnersQuarters[i])]);
+        }
+        else
+        {
+            printf("%s ", winnersQuarters[i]);
+        }
     }
     printf("\n");
 
@@ -649,7 +755,14 @@ int main(int argc, char *argv[])
             char *secondSign = messageTokenized[j * 6 + 5];
 
             winnersSemiFinals[j] = winner;
-            printf("\t%s vs %s\t\t%s - %s\n", firstPlayer, secondPlayer, firstSign, secondSign);
+            if (namedPlayer == 1)
+            {
+                printf("\t%s vs %s\t\t%s - %s\n", playersName[atoi(firstPlayer)], playersName[atoi(secondPlayer)], firstSign, secondSign);
+            }
+            else
+            {
+                printf("\t%s vs %s\t\t%s - %s\n", firstPlayer, secondPlayer, firstSign, secondSign);
+            }
         }
     }
     else
@@ -697,7 +810,14 @@ int main(int argc, char *argv[])
     printf("\nRemaining players: ");
     for (i = 0; i < nSemiFinals; i++)
     {
-        printf("%s ", winnersSemiFinals[i]);
+        if (namedPlayer == 1)
+        {
+            printf("%s ", playersName[atoi(winnersSemiFinals[i])]);
+        }
+        else
+        {
+            printf("%s ", winnersSemiFinals[i]);
+        }
     }
     printf("\n");
 
@@ -736,9 +856,16 @@ int main(int argc, char *argv[])
         char *winner = messageTokenized[3];
         char *firstSign = messageTokenized[4];
         char *secondSign = messageTokenized[5];
-        printf("\t%s vs %s\t\t%s - %s\n", firstPlayer, secondPlayer, firstSign, secondSign);
-
-        printf(GREEN_CODE "\n\nTHE WINNER IS: %s\n" RESET_CODE, winner);
+        if (namedPlayer == 1)
+        {
+            printf("\t%s vs %s\t\t%s - %s\n", playersName[atoi(firstPlayer)], playersName[atoi(secondPlayer)], firstSign, secondSign);
+            printf(GREEN_CODE "\n\nTHE WINNER IS: %s\n" RESET_CODE, playersName[atoi(winner)]);
+        }
+        else
+        {
+            printf("\t%s vs %s\t\t%s - %s\n", firstPlayer, secondPlayer, firstSign, secondSign);
+            printf(GREEN_CODE "\n\nTHE WINNER IS: %s\n" RESET_CODE, winner);
+        }
     }
     else
     {

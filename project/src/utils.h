@@ -6,6 +6,7 @@
 #define MAXN 1000
 #define MAXLEN 7000      // max len of message
 #define MAINSTREAMLEN 10 //length of number parameter passing by match->day->main
+#define FILELINELENGTH 20
 
 #define MAX_TEAMS 32U
 

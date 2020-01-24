@@ -52,4 +52,4 @@ clean:
 
 help:
 	@echo "Made by Alessia Marcolini and Leonardo Berrighi"
-	@echo "To start, run 'make build' and then './run'"
+	@echo "To start, run 'make build' and then './run <number of players>' OR './run <number of players> <filename>' if you want to provide player names"

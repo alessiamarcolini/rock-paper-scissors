@@ -103,11 +103,11 @@ int main(int argc, char *argv[])
     {
         if (k == 0)
         {
-            printfBlue("\n----- FORWARD / ANDATA -----\n\n");
+            printf(BLUE_CODE "\n----- FORWARD / ANDATA -----\n\n" RESET_CODE);
         }
         else
         {
-            printfBlue("\n----- RETURN / RITORNO -----\n\n");
+            printf(BLUE_CODE "\n----- RETURN / RITORNO -----\n\n" RESET_CODE);
         }
 
         //forward and return (fix rewrite on same buffer and re-do of same matrix)
@@ -130,7 +130,7 @@ int main(int argc, char *argv[])
             }
 
             //printf((YELLOW_CODE "DAY %d:\n" RESET_CODE, i + 1));
-            printf("DAY %d:\n", (i + 1));
+            printf(YELLOW_CODE "DAY %d:\n" RESET_CODE, (i + 1));
 
             pid = fork();
 
@@ -508,7 +508,7 @@ int main(int argc, char *argv[])
         }
     }
 
-    printfBlue("\n----- LEADERBOARD -----\n");
+    printf(BLUE_CODE "\n----- LEADERBOARD -----\n" RESET_CODE);
     for (i = 0; i < 8; i++)
     {
         printf("%d ", leaderboard[i]);
@@ -518,7 +518,7 @@ int main(int argc, char *argv[])
 
     // quarterfinals
 
-    printfBlue("\n----- QUARTER FINALS -----\n");
+    printf(BLUE_CODE "\n----- QUARTER FINALS -----\n" RESET_CODE);
 
     int e = pipe(fd);
 
@@ -613,7 +613,7 @@ int main(int argc, char *argv[])
     printf("\n");
 
     // semi finals
-    printfBlue("\n----- SEMI FINALS -----\n");
+    printf(BLUE_CODE "\n----- SEMI FINALS -----\n" RESET_CODE);
     e = pipe(fd);
     if (e < 0)
     {
@@ -703,7 +703,7 @@ int main(int argc, char *argv[])
 
     // finals
 
-    printfBlue("\n----- FINALS -----\n");
+    printf(BLUE_CODE "\n----- FINALS -----\n" RESET_CODE);
 
     e = pipe(fd);
     if (e < 0)
@@ -738,7 +738,7 @@ int main(int argc, char *argv[])
         char *secondSign = messageTokenized[5];
         printf("\t%s vs %s\t\t%s - %s\n", firstPlayer, secondPlayer, firstSign, secondSign);
 
-        printf("\n\nTHE WINNER IS: %s\n", winner);
+        printf(GREEN_CODE "\n\nTHE WINNER IS: %s\n" RESET_CODE, winner);
     }
     else
     {

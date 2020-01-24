@@ -13,8 +13,8 @@ char *buffer;
 
 int main(int argc, char *argv[])
 {
-
     buffer = malloc(sizeof(char) * 1024);
+
     if (buffer == NULL)
     {
         fprintf(stderr, "Malloc failure: dinamic memory allocation not possible.\n");
@@ -22,13 +22,10 @@ int main(int argc, char *argv[])
     }
     int playersNumber = atoi(argv[1]);
     char *season = argv[argc - 1];
-    //printf("sono la giornata\n");
-    //printf("%s\n", argv[1]);
     int i;
 
     for (i = 0; i < playersNumber / 2; i++)
     {
-        //sleep(1);
         int fd[2];
         int e = pipe(fd);
         if (e < 0)
@@ -46,18 +43,18 @@ int main(int argc, char *argv[])
 
         if (pid > 0)
         { // day
-            //printf("Sono il padre\n");
-
             close(fd[WRITE]); /* close other side */
             bytesRead = read(fd[READ], message, MAXLEN);
+            
             if (bytesRead <= 0)
             {
                 fprintf(stderr, "Error reading from pipe.\n");
                 exit(8);
             }
 
-            sprintf(buffer, "%d %s\n", i, message); // dayId|message // TODO: mandare in blocco!!!!
+            sprintf(buffer, "%d %s\n", i, message); // dayId|message
             messageToSendByLine[i] = malloc(sizeof(char) * 1024);
+
             if (messageToSendByLine[i] == NULL)
             {
                 fprintf(stderr, "Malloc failure: dinamic memory allocation not possible.\n");
@@ -69,7 +66,6 @@ int main(int argc, char *argv[])
         }
         else
         { // match
-            //printf("%d\n", fd);
             int e = dup2(fd[WRITE], WRITE);
             if (e < 0)
             {
@@ -110,7 +106,6 @@ int main(int argc, char *argv[])
     strcat(messageToSend, "");
     for (i = 0; i < playersNumber / 2; i++)
     {
-        //printf("%s", messageToSendByLine[i]);
         strcat(messageToSend, messageToSendByLine[i]);
     }
     printf("%s", messageToSend);
@@ -119,6 +114,8 @@ int main(int argc, char *argv[])
     {
         free(messageToSendByLine[i]);
     }
+
     free(buffer);
+    
     return 0;
 }

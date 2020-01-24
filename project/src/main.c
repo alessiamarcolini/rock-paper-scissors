@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <errno.h>
+#include <ctype.h>
 #include "utils.h"
 
 int championship[MAXN][MAXN];
@@ -784,11 +785,11 @@ int main(int argc, char *argv[])
         char *messageTokenized[MAINSTREAMLEN * 1]; // *(playersNumber/2) dovuto al fatto che legge tutto lo stream della giornata, e non il singolo match
         tokenizerMultipleDelimiter(messageFinals, messageTokenized);
 
-        char *firstPlayer = messageTokenized[j * 6 + 1];
-        char *secondPlayer = messageTokenized[j * 6 + 2];
-        char *winner = messageTokenized[j * 6 + 3];
-        char *firstSign = messageTokenized[j * 6 + 4];
-        char *secondSign = messageTokenized[j * 6 + 5];
+        char *firstPlayer = messageTokenized[1];
+        char *secondPlayer = messageTokenized[2];
+        char *winner = messageTokenized[3];
+        char *firstSign = messageTokenized[4];
+        char *secondSign = messageTokenized[5];
         printf("\t%s vs %s\t %s - %s\n", firstPlayer, secondPlayer, firstSign, secondSign);
 
         printf("\n\nTHE WINNER IS: %s\n", winner);

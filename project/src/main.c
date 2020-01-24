@@ -753,7 +753,7 @@ int main(int argc, char *argv[])
 
     // finals
 
-    printf("FINALI\n");
+    printf("\n----- FINALS -----\n");
 
     e = pipe(fd);
     if (e < 0)
@@ -779,15 +779,19 @@ int main(int argc, char *argv[])
             fprintf(stderr, "Error reading from pipe.\n");
             exit(8);
         }
-        fprintf(stderr, "\n- main4: Read %d bytes: \n%s", bytesRead, messageFinals);
+        //fprintf(stderr, "\n- main4: Read %d bytes: \n%s", bytesRead, messageFinals);
 
         char *messageTokenized[MAINSTREAMLEN * 1]; // *(playersNumber/2) dovuto al fatto che legge tutto lo stream della giornata, e non il singolo match
         tokenizerMultipleDelimiter(messageFinals, messageTokenized);
 
-        char *firstPlayer = messageTokenized[1];
-        char *secondPlayer = messageTokenized[2];
-        char *winner = messageTokenized[3];
-        fprintf(stderr, "winner: %s\n", winner);
+        char *firstPlayer = messageTokenized[j * 6 + 1];
+        char *secondPlayer = messageTokenized[j * 6 + 2];
+        char *winner = messageTokenized[j * 6 + 3];
+        char *firstSign = messageTokenized[j * 6 + 4];
+        char *secondSign = messageTokenized[j * 6 + 5];
+        printf("\t%s vs %s\t %s - %s\n", firstPlayer, secondPlayer, firstSign, secondSign);
+
+        printf("\n\nTHE WINNER IS: %s\n", winner);
     }
     else
     {

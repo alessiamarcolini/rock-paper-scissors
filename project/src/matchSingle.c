@@ -4,7 +4,7 @@
 
 int main(int argc, char *argv[])
 {
-    char *semiFinalId = argv[1];
+    char *matchSingleId = argv[1];
     char *firstPlayerId = argv[2];
     char *secondPlayerId = argv[3];
 
@@ -30,13 +30,13 @@ int main(int argc, char *argv[])
                 winner = firstPlayerId;
 
                 notParity = TRUE;
-                printf("%s %s %s %s R S\n", semiFinalId, firstPlayerId, secondPlayerId, winner);
+                printf("%s %s %s %s R S\n", matchSingleId, firstPlayerId, secondPlayerId, winner);
             }
             else if (second == paper)
             { // second winner
                 winner = secondPlayerId;
                 notParity = TRUE;
-                printf("%s %s %s %s R P\n", semiFinalId, firstPlayerId, secondPlayerId, winner);
+                printf("%s %s %s %s R P\n", matchSingleId, firstPlayerId, secondPlayerId, winner);
             }
             break;
         case paper:
@@ -44,13 +44,13 @@ int main(int argc, char *argv[])
             { // first winner
                 winner = firstPlayerId;
                 notParity = TRUE;
-                printf("%s %s %s %s P R\n", semiFinalId, firstPlayerId, secondPlayerId, winner);
+                printf("%s %s %s %s P R\n", matchSingleId, firstPlayerId, secondPlayerId, winner);
             }
             else if (second == scissor)
             { // second winner
                 winner = secondPlayerId;
                 notParity = TRUE;
-                printf("%s %s %s %s P S\n", semiFinalId, firstPlayerId, secondPlayerId, winner);
+                printf("%s %s %s %s P S\n", matchSingleId, firstPlayerId, secondPlayerId, winner);
             }
             break;
         case scissor:
@@ -58,13 +58,13 @@ int main(int argc, char *argv[])
             { // first winner
                 winner = firstPlayerId;
                 notParity = TRUE;
-                printf("%s %s %s %s S P\n", semiFinalId, firstPlayerId, secondPlayerId, winner);
+                printf("%s %s %s %s S P\n", matchSingleId, firstPlayerId, secondPlayerId, winner);
             }
             else if (second == rock)
             { // second winner
                 winner = secondPlayerId;
                 notParity = TRUE;
-                printf("%s %s %s %s S R\n", semiFinalId, firstPlayerId, secondPlayerId, winner);
+                printf("%s %s %s %s S R\n", matchSingleId, firstPlayerId, secondPlayerId, winner);
             }
             break;
         default:

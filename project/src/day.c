@@ -93,7 +93,7 @@ int main(int argc, char *argv[])
                 secondPlayer = argv[i * 2 + 2];
             }
 
-            char *const paramList[] = {"bin/match", str, firstPlayer, secondPlayer, NULL};
+            char *const paramList[] = {"bin/matchTen", str, firstPlayer, secondPlayer, NULL};
             e = execv(paramList[0], paramList);
             if (e < 0)
             {

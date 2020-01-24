@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
         firstPlayer = argv[2];
         secondPlayer = argv[3];
 
-        char *const paramList[] = {"bin/final", str, firstPlayer, secondPlayer, NULL};
+        char *const paramList[] = {"bin/matchSingle", str, firstPlayer, secondPlayer, NULL};
         e = execv(paramList[0], paramList);
         if (e < 0)
         {

@@ -5,7 +5,7 @@ CFLAGS = -std=gnu90
 
 default: help
 
-objects = bin/utils.o bin/day bin/match bin/quarterFinals bin/quarter bin/semiFinals bin/semiFinal bin/finals bin/final bin/main
+objects = bin/utils.o bin/day bin/matchTen bin/matchSingle bin/quarterFinals bin/semiFinals bin/finals  bin/main
 
 bin: $(objects)
 
@@ -23,26 +23,20 @@ bin/main: src/main.c bin/utils.o
 bin/day: src/day.c bin/utils.o
 	$(CC) $(CFLAGS) -o bin/day src/day.c bin/utils.o
 
-bin/match: src/match.c 
-	$(CC) $(CFLAGS) -o bin/match src/match.c
+bin/matchTen: src/matchTen.c 
+	$(CC) $(CFLAGS) -o bin/matchTen src/matchTen.c
 
 bin/quarterFinals: src/quarterFinals.c
 	$(CC) $(CFLAGS) -o bin/quarterFinals src/quarterFinals.c
 
-bin/quarter: src/quarter.c
-	$(CC) $(CFLAGS) -o bin/quarter src/quarter.c
-
 bin/semiFinals: src/semiFinals.c
 	$(CC) $(CFLAGS) -o bin/semiFinals src/semiFinals.c
-
-bin/semiFinal: src/semiFinal.c
-	$(CC) $(CFLAGS) -o bin/semiFinal src/semiFinal.c
 
 bin/finals: src/finals.c
 	$(CC) $(CFLAGS) -o bin/finals src/finals.c
 
-bin/final: src/final.c
-	$(CC) $(CFLAGS) -o bin/final src/final.c
+bin/matchSingle: src/matchSingle.c
+	$(CC) $(CFLAGS) -o bin/matchSingle src/matchSingle.c
 
 bin/utils.o: src/utils.c
 	$(CC) $(CFLAGS) -c -o bin/utils.o src/utils.c

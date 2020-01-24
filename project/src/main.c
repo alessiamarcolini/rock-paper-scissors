@@ -650,8 +650,14 @@ int main(int argc, char *argv[])
         exit(8);
     }
 
+    printf("\nRemaining players: ");
+    for (i = 0; i < nQuarters; i++)
+    {
+        printf("%s ", winnersQuarters[i]);
+    }
+    printf("\n");
     // semi finals
-    printf("SEMI FINALS\n");
+    printf("\n----- SEMI FINALS -----\n");
     e = pipe(fd);
     if (e < 0)
     {
@@ -676,7 +682,7 @@ int main(int argc, char *argv[])
             fprintf(stderr, "Error reading from pipe.\n");
             exit(8);
         }
-        fprintf(stderr, "\n- main3: Read %d bytes: \n%s", bytesRead, messageSemiFinals);
+        //fprintf(stderr, "\n- main3: Read %d bytes: \n%s", bytesRead, messageSemiFinals);
 
         char *messageTokenized[MAINSTREAMLEN * 4]; // *(playersNumber/2) dovuto al fatto che legge tutto lo stream della giornata, e non il singolo match
         //tokenizer(messageSemiFinals, messageTokenized, " ", (MAINSTREAMLEN)*4);
@@ -684,11 +690,14 @@ int main(int argc, char *argv[])
 
         for (j = 0; j < nSemiFinals; j++)
         {
-            char *firstPlayer = messageTokenized[j * 4 + 1];
-            char *secondPlayer = messageTokenized[j * 4 + 2];
-            char *winner = messageTokenized[j * 4 + 3];
+            char *firstPlayer = messageTokenized[j * 6 + 1];
+            char *secondPlayer = messageTokenized[j * 6 + 2];
+            char *winner = messageTokenized[j * 6 + 3];
+            char *firstSign = messageTokenized[j * 6 + 4];
+            char *secondSign = messageTokenized[j * 6 + 5];
+
             winnersSemiFinals[j] = winner;
-            fprintf(stderr, "winner: %s\n", winner);
+            printf("\t%s vs %s\t %s - %s\n", firstPlayer, secondPlayer, firstSign, secondSign);
         }
     }
     else
@@ -707,8 +716,6 @@ int main(int argc, char *argv[])
         paramList[0] = "bin/semiFinals";
         paramList[1] = "4";
         paramList[playersNumber + 3] = NULL;
-
-        fprintf(stderr, "sto creando semifinals\n");
 
         for (i = 0; i < nSemiFinals * 2; i++)
         {
@@ -736,6 +743,13 @@ int main(int argc, char *argv[])
         fprintf(stderr, "Child process failed.\n");
         exit(8);
     }
+
+    printf("\nRemaining players: ");
+    for (i = 0; i < nSemiFinals; i++)
+    {
+        printf("%s ", winnersSemiFinals[i]);
+    }
+    printf("\n");
 
     // finals
 

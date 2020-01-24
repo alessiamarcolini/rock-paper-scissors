@@ -10,6 +10,8 @@ Progetto del corso di Sistemi Operativi, secondo anno della laurea triennale in 
 | `194274` | Alessia Marcolini | alessia.marcolini@studenti.unitn.it |
 
 ## Setup
+Testato con Ubuntu 18.04 e macOS 10.14.
+
 ```bash
 cd project
 make build

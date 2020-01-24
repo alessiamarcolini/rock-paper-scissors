@@ -33,8 +33,7 @@ int main(int argc, char *argv[])
     }
 
     if (pid > 0)
-    { //
-
+    {
         close(fd[WRITE]);
         bytesRead = read(fd[READ], message, MAXLEN);
         if (bytesRead <= 0)
@@ -43,10 +42,7 @@ int main(int argc, char *argv[])
             exit(8);
         }
 
-        //sprintf(buffer, "%s\n", message); // dayId|message
         printf("%s\n", message);
-
-        //strcpy(messageToSendByLine[i], buffer);
 
         close(fd[READ]);
     }

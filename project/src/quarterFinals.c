@@ -25,8 +25,6 @@ int main(int argc, char *argv[])
 
     for (i = 0; i < nQuarters; i++)
     {
-
-        //sleep(1);
         int fd[2];
         int e = pipe(fd);
         if (e < 0)
@@ -52,7 +50,7 @@ int main(int argc, char *argv[])
                 exit(8);
             }
 
-            sprintf(buffer, "%s\n", message); // dayId|message // TODO: mandare in blocco!!!!
+            sprintf(buffer, "%s\n", message); // dayId|message
             messageToSendByLine[i] = malloc(sizeof(char) * 1024);
             if (messageToSendByLine[i] == NULL)
             {
@@ -96,9 +94,9 @@ int main(int argc, char *argv[])
 
     char messageToSend[MAXLEN];
     strcat(messageToSend, "");
+    
     for (i = 0; i < nQuarters; i++)
     {
-        //printf("%s", messageToSendByLine[i]);
         strcat(messageToSend, messageToSendByLine[i]);
     }
     printf("%s", messageToSend);
@@ -107,6 +105,8 @@ int main(int argc, char *argv[])
     {
         free(messageToSendByLine[i]);
     }
+
     free(buffer);
+    
     return 0;
 }

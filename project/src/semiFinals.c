@@ -26,7 +26,6 @@ int main(int argc, char *argv[])
 
     for (i = 0; i < nSemiFinals; i++)
     {
-
         sleep(1);
         int fd[2];
         int e = pipe(fd);

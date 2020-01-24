@@ -33,20 +33,12 @@ int matching(int numSquadre, int championship[MAXN][MAXN], int even)
     giornate = numSquadre;
     first = 0;
 
-    //printf("Squadre........... %d\nPivot............. %d\n"
-    //       "Shift............. %d\n",
-    //       numSquadre + 1, squadre[numSquadre], Shift);
-
     for (i = 0; i < giornate; ++i)
     {
         int j = 0;
 
         size_t id1;
         int ofs;
-
-        //printf(">> Giornata %2d *******************************************************\n"
-        //       "%d-%d",
-        //       i + 1, squadre[numSquadre], squadre[first]);
 
         calendario[squadre[numSquadre]][squadre[first]] = i + 1;
         calendario[squadre[first]][squadre[numSquadre]] = i + 1;
@@ -59,8 +51,6 @@ int matching(int numSquadre, int championship[MAXN][MAXN], int even)
         {
             size_t id2 = (id1 + ofs) % numSquadre;
 
-            //printf(", %d-%d", squadre[id1], squadre[id2]);
-
             championship[i][j] = squadre[id1];
             championship[i][j + 1] = squadre[id2];
 
@@ -70,21 +60,8 @@ int matching(int numSquadre, int championship[MAXN][MAXN], int even)
             calendario[squadre[id2]][squadre[id1]] = i + 1;
             id1 = (id1 + 1) % numSquadre;
         }
-        //puts("");
         first = (first + Shift) % numSquadre;
     }
-
-    //puts("**********************************************************************\n");
-
-    //for (i = 0; i <= numSquadre; ++i)
-    //{
-    //    size_t j;
-    //    for (j = 0; j <= numSquadre; ++j)
-    //    {
-    //        printf("%2d ", calendario[i][j]);
-    //    }
-    //    puts("");
-    //}
 
     return EXIT_SUCCESS;
 }
@@ -101,7 +78,6 @@ void tokenizer(char *buffer, int *tokens, char *delimiter, int length)
     char *b;
     long l = strtol(ptr, &b, 10);
     tokens[0] = l; //cast str to int (implicit by long to int)
-    //fprintf(stderr, "%d | ", tokens[0]);
     tokenIndex = 1;
     int i;
     for (i = 0; i < length; i++)
@@ -109,31 +85,26 @@ void tokenizer(char *buffer, int *tokens, char *delimiter, int length)
         ptr = strtok(NULL, delim);
         l = strtol(ptr, &b, 10);
         tokens[tokenIndex] = l; //cast str to int (implicit by long to int)
-        //fprintf(stderr, "%d %d | ", tokens[tokenIndex], tokenIndex);
         tokenIndex++;
     }
 }
 
 void tokenizerMultipleDelimiter(char *buffer, char *tokens[MAINSTREAMLEN * 6])
 {
-
     char delimit[] = " \t\r\n\v\f"; // 2) POSIX whitespace characters
     char *token = strtok(buffer, delimit);
     tokens[0] = token;
-    //tokens[0] = strtok(NULL, delimit);
 
     // Keep printing tokens while one of the
     // delimiters present in str[].
     int i = 0;
     while (tokens[i] != NULL)
     {
-        //fprintf(stderr, "%s ", tokens[i]);
         i++;
         tokens[i] = strtok(NULL, delimit);
     }
 }
 
-// swap the value of two variables
 void swap(int *a, int *b)
 {
     int c = *a;

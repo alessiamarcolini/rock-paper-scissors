@@ -116,11 +116,11 @@ int main(int argc, char *argv[])
     {
         if (k == 0)
         {
-            printf("\n----- FORWARD / ANDATA -----\n\n");
+            printfBlue("\n----- FORWARD / ANDATA -----\n\n");
         }
         else
         {
-            printf("\n----- RETURN / RITORNO -----\n\n");
+            printfBlue("\n----- RETURN / RITORNO -----\n\n");
         }
         //forward and return (fix rewrite on same buffer and re-do of same matrix)
         for (i = 0; i < playersNumber - 1; i++) // for each day
@@ -141,6 +141,7 @@ int main(int argc, char *argv[])
                 exit(5);
             }
 
+            //printf((YELLOW_CODE "DAY %d:\n" RESET_CODE, i + 1));
             printf("DAY %d:\n", (i + 1));
 
             pid = fork();
@@ -561,7 +562,7 @@ int main(int argc, char *argv[])
         }
     }
 
-    printf("\n----- LEADERBOARD -----\n");
+    printfBlue("\n----- LEADERBOARD -----\n");
     for (i = 0; i < 8; i++)
     {
         printf("%d ", leaderboard[i]);
@@ -571,7 +572,7 @@ int main(int argc, char *argv[])
 
     // quarterfinals
 
-    printf("\n----- QUARTER FINALS -----\n");
+    printfBlue("\n----- QUARTER FINALS -----\n");
 
     int e = pipe(fd);
     if (e < 0)
@@ -668,7 +669,7 @@ int main(int argc, char *argv[])
     }
     printf("\n");
     // semi finals
-    printf("\n----- SEMI FINALS -----\n");
+    printfBlue("\n----- SEMI FINALS -----\n");
     e = pipe(fd);
     if (e < 0)
     {
@@ -764,7 +765,7 @@ int main(int argc, char *argv[])
 
     // finals
 
-    printf("\n----- FINALS -----\n");
+    printfBlue("\n----- FINALS -----\n");
 
     e = pipe(fd);
     if (e < 0)

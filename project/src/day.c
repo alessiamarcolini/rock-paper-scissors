@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
 
     for (i = 0; i < playersNumber / 2; i++)
     {
-        //sleep(1);
+        sleep(1);
         int fd[2];
         int e = pipe(fd);
         if (e < 0)

@@ -18,6 +18,22 @@
 #define nQuarters 4
 #define nSemiFinals 2
 
+#define RED_CODE "\x1b[31m"
+#define GREEN_CODE "\x1b[32m"
+#define YELLOW_CODE "\x1b[33m"
+#define BLUE_CODE "\x1b[34m"
+#define MAGENTA_CODE "\x1b[35m"
+#define CYAN_CODE "\x1b[36m"
+#define RESET_CODE "\x1b[0m"
+
+#define RED(string) "\x1b[31m" string "\x1b[0m"
+#define BLUE(string) "\x1b[34m" string "\x1b[0m"
+#define YELLOW(string) "\x1b[33m" string "\x1b[0m"
+
+#define printfRed(X) printf(RED(X), X);
+#define printfBlue(X) printf(BLUE(X), X);
+#define printfYellow(X) printf(YELLOW(X), X);
+
 enum rockPaperScissor
 {
     rock,

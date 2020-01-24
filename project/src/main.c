@@ -175,10 +175,9 @@ int main(int argc, char *argv[])
                     homePlayer = resultsTokenized[j * MAINSTREAMLEN + 1];
                     externalPlayer = resultsTokenized[j * MAINSTREAMLEN + 2];
 
-                    printf("\t%d vs %d\t", homePlayer, externalPlayer);
-
                     if (homePlayer != 99 && externalPlayer != 99)
                     {
+                        printf("\t%d vs %d\t\t", homePlayer, externalPlayer);
                         winFirstPlayer = resultsTokenized[j * MAINSTREAMLEN + 5];
                         winSecondPlayer = resultsTokenized[j * MAINSTREAMLEN + 6];
                         printf("%d - %d\n", winFirstPlayer, winSecondPlayer);
@@ -199,6 +198,17 @@ int main(int argc, char *argv[])
                         {
                             scoreBoardR[homePlayer][externalPlayer] += winFirstPlayer;
                             scoreBoardR[externalPlayer][homePlayer] += winSecondPlayer;
+                        }
+                    }
+                    else
+                    {
+                        if (homePlayer == 99)
+                        {
+                            printf("\t\tNo match for %d\n", externalPlayer);
+                        }
+                        if (externalPlayer == 99)
+                        {
+                            printf("\t\tNo match for %d\n", homePlayer);
                         }
                     }
                 }
@@ -601,7 +611,7 @@ int main(int argc, char *argv[])
             char *firstSign = messageTokenized[j * 6 + 4];
             char *secondSign = messageTokenized[j * 6 + 5];
 
-            printf("\t%s vs %s\t %s - %s\n", firstPlayer, secondPlayer, firstSign, secondSign);
+            printf("\t%s vs %s\t\t%s - %s\n", firstPlayer, secondPlayer, firstSign, secondSign);
             winnersQuarters[j] = winner;
             //fprintf(stderr, "winner: %s\n", winner);
         }
@@ -698,7 +708,7 @@ int main(int argc, char *argv[])
             char *secondSign = messageTokenized[j * 6 + 5];
 
             winnersSemiFinals[j] = winner;
-            printf("\t%s vs %s\t %s - %s\n", firstPlayer, secondPlayer, firstSign, secondSign);
+            printf("\t%s vs %s\t\t%s - %s\n", firstPlayer, secondPlayer, firstSign, secondSign);
         }
     }
     else
@@ -790,7 +800,7 @@ int main(int argc, char *argv[])
         char *winner = messageTokenized[3];
         char *firstSign = messageTokenized[4];
         char *secondSign = messageTokenized[5];
-        printf("\t%s vs %s\t %s - %s\n", firstPlayer, secondPlayer, firstSign, secondSign);
+        printf("\t%s vs %s\t\t%s - %s\n", firstPlayer, secondPlayer, firstSign, secondSign);
 
         printf("\n\nTHE WINNER IS: %s\n", winner);
     }

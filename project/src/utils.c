@@ -114,7 +114,7 @@ void tokenizer(char *buffer, int *tokens, char *delimiter, int length)
     }
 }
 
-void tokenizerMultipleDelimiter(char *buffer, char *tokens[MAINSTREAMLEN * 4])
+void tokenizerMultipleDelimiter(char *buffer, char *tokens[MAINSTREAMLEN * 6])
 {
 
     char delimit[] = " \t\r\n\v\f"; // 2) POSIX whitespace characters

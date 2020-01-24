@@ -39,12 +39,14 @@ int main(int argc, char *argv[])
 
                 notParity = TRUE;
                 //fprintf(stderr, "R S\n");
+                printf("%s %s %s %s R S\n", quarterId, firstPlayerId, secondPlayerId, winner);
             }
             else if (second == paper)
             { // second winner
                 winner = secondPlayerId;
                 notParity = TRUE;
                 //fprintf(stderr, "R P\n");
+                printf("%s %s %s %s R P\n", quarterId, firstPlayerId, secondPlayerId, winner);
             }
             break;
         case paper:
@@ -53,12 +55,14 @@ int main(int argc, char *argv[])
                 winner = firstPlayerId;
                 notParity = TRUE;
                 //fprintf(stderr, "P R\n");
+                printf("%s %s %s %s P R\n", quarterId, firstPlayerId, secondPlayerId, winner);
             }
             else if (second == scissor)
             { // second winner
                 winner = secondPlayerId;
                 notParity = TRUE;
                 //fprintf(stderr, "P S\n");
+                printf("%s %s %s %s P S\n", quarterId, firstPlayerId, secondPlayerId, winner);
             }
             break;
         case scissor:
@@ -67,12 +71,14 @@ int main(int argc, char *argv[])
                 winner = firstPlayerId;
                 notParity = TRUE;
                 //fprintf(stderr, "S P\n");
+                printf("%s %s %s %s S P\n", quarterId, firstPlayerId, secondPlayerId, winner);
             }
             else if (second == rock)
             { // second winner
                 winner = secondPlayerId;
                 notParity = TRUE;
                 //fprintf(stderr, "S R\n");
+                printf("%s %s %s %s S R\n", quarterId, firstPlayerId, secondPlayerId, winner);
             }
             break;
         default:
@@ -83,7 +89,6 @@ int main(int argc, char *argv[])
     } while (!notParity);
 
     //fprintf(stderr, "the winner is: %s\n", winner);
-    printf("%s %s %s %s\n", quarterId, firstPlayerId, secondPlayerId, winner);
 
     //free(winner);
 

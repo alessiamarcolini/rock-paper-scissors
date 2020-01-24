@@ -594,11 +594,13 @@ int main(int argc, char *argv[])
 
         for (j = 0; j < nQuarters; j++)
         {
-            char *firstPlayer = messageTokenized[j * nQuarters + 1];
-            char *secondPlayer = messageTokenized[j * nQuarters + 2];
-            char *winner = messageTokenized[j * nQuarters + 3];
+            char *firstPlayer = messageTokenized[j * 6 + 1];
+            char *secondPlayer = messageTokenized[j * 6 + 2];
+            char *winner = messageTokenized[j * 6 + 3];
+            char *firstSign = messageTokenized[j * 6 + 4];
+            char *secondSign = messageTokenized[j * 6 + 5];
 
-            printf("\t%s vs %s\t winner: %s\n", firstPlayer, secondPlayer, winner);
+            printf("\t%s vs %s\t %s - %s\n", firstPlayer, secondPlayer, firstSign, secondSign);
             winnersQuarters[j] = winner;
             //fprintf(stderr, "winner: %s\n", winner);
         }

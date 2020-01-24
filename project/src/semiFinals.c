@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
                 exit(6);
             }
             strcpy(messageToSendByLine[i], buffer);
-            free(buffer);
+
             close(fd[READ]);
         }
         else
@@ -107,6 +107,6 @@ int main(int argc, char *argv[])
     {
         free(messageToSendByLine[i]);
     }
-
+    free(buffer);
     return 0;
 }

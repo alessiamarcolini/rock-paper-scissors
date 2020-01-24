@@ -94,7 +94,7 @@ int main(int argc, char *argv[])
 
     matching(playersNumber, championship, even); // matrix playersNumber x playersNumber-1
 
-    for (i = 0; i < playersNumber - 1; i++)
+    /*for (i = 0; i < playersNumber - 1; i++)
     {
         //printf("Day %d: ", i+1);
         for (j = 0; j < playersNumber; j++)
@@ -105,6 +105,7 @@ int main(int argc, char *argv[])
         }
         fprintf(stderr, "\n");
     }
+    */
 
     pid_t pid;
     pid_t wait_pid;
@@ -158,7 +159,7 @@ int main(int argc, char *argv[])
                     fprintf(stderr, "Error reading from pipe.\n");
                     exit(8);
                 }
-                fprintf(stderr, "\n- main: Read %d bytes: \n%s", bytesRead, message);
+                //fprintf(stderr, "\n- main: Read %d bytes: \n%s", bytesRead, message);
 
                 //parsing and upload on the points structures
                 int resultsTokenized[(MAINSTREAMLEN) * (playersNumber / 2)]; // *(playersNumber/2) dovuto al fatto che legge tutto lo stream della giornata, e non il singolo match
@@ -173,10 +174,13 @@ int main(int argc, char *argv[])
                     homePlayer = resultsTokenized[j * MAINSTREAMLEN + 1];
                     externalPlayer = resultsTokenized[j * MAINSTREAMLEN + 2];
 
+                    printf("\tFirst player: %d - second player: %d\t", homePlayer, externalPlayer);
+
                     if (homePlayer != 99 && externalPlayer != 99)
                     {
                         winFirstPlayer = resultsTokenized[j * MAINSTREAMLEN + 5];
                         winSecondPlayer = resultsTokenized[j * MAINSTREAMLEN + 6];
+                        printf("%d - %d\n", winFirstPlayer, winSecondPlayer);
 
                         score[homePlayer] = score[homePlayer] + resultsTokenized[j * MAINSTREAMLEN + 3];                                                 //resultsTokenized[1] = firstPlayerId, resultsTokenized[3] = sumPointsFirstPlayer
                         differencePoints[homePlayer] = differencePoints[homePlayer] + winFirstPlayer - resultsTokenized[j * MAINSTREAMLEN + 7];          //resultsTokenized[5] = numberOfWinFirstPlayer, resultsTokenized[7] = numberOfLoseFirstPlayer

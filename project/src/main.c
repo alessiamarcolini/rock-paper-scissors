@@ -68,13 +68,14 @@ int main(int argc, char *argv[])
     }
     snprintf(playersNumber_str, 1024, "%d", playersNumber);
 
-    //arrays for calculate rate and parity
-    int score[playersNumber];
-    int differencePoints[playersNumber];
-    int scoreBoardA[playersNumber][playersNumber]; //dove salveremo i punteggi d'andata
-    int scoreBoardR[playersNumber][playersNumber]; //dove salveremo i punteggi di ritorno
+    printf("Number of days: %d\n", playersNumber - 1);
 
-    //initialization of score board matrix
+    int score[playersNumber];                      // cumulative (per day) number of points per player
+    int differencePoints[playersNumber];           // difference between wins and losses per player
+    int scoreBoardA[playersNumber][playersNumber]; // "andata" scoreboard
+    int scoreBoardR[playersNumber][playersNumber]; // "ritorno" scoreboard
+
+    //initialization of score board matrices
     for (i = 0; i < playersNumber; i++)
     {
         for (j = 0; j < playersNumber; j++)
@@ -87,20 +88,19 @@ int main(int argc, char *argv[])
     //initialization of score array and points difference array
     for (i = 0; i < playersNumber; i++)
     {
-
         score[i] = 0;
-
         differencePoints[i] = 0;
     }
 
     matching(playersNumber, championship, even); // matrix playersNumber x playersNumber-1
 
-    //printf("championship\n");
     for (i = 0; i < playersNumber - 1; i++)
     {
+        //printf("Day %d: ", i+1);
         for (j = 0; j < playersNumber; j++)
         {
-            fprintf(stderr, "%d", championship[i][j]);
+
+            printf("%d ", championship[i][j]);
             fprintf(stderr, " ");
         }
         fprintf(stderr, "\n");
@@ -111,7 +111,16 @@ int main(int argc, char *argv[])
     int status; // return status of child
 
     for (k = 0; k < 2; k++)
-    {                                           //forward and return (fix rewrite on same buffer and re-do of same matrix)
+    {
+        if (k == 0)
+        {
+            printf("----- FORWARD / ANDATA -----\n\n");
+        }
+        else
+        {
+            printf("----- RETURN / RITORNO -----\n\n");
+        }
+        //forward and return (fix rewrite on same buffer and re-do of same matrix)
         for (i = 0; i < playersNumber - 1; i++) // for each day
         {
             if (i != 0)
@@ -129,6 +138,8 @@ int main(int argc, char *argv[])
                 fprintf(stderr, "Error pipe: %s\n", strerror(errno));
                 exit(5);
             }
+
+            printf("DAY %d:\n", (i + 1));
 
             pid = fork();
 

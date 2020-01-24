@@ -18,13 +18,13 @@ Nello specifico, il processo principale genera dei figli per ogni giornata (day)
 Nelle utils sono riportate, come da norma, le funzioni utilizzate. L'attesa di un secondo fra le giornate è necessaria a una buona produzione degli output.
 
 Gestione errori
-Exit(1) --> valore non intero di input
-Exit(2) --> valore input <8
-Exit(3) --> fork
-Exit(4) --> execv
-Exit(5) --> pipe
-Exit(6) --> malloc
-Exit(7) --> default sullo switch
-Exit(8) --> waitpid
-Exit(9) --> read
-Exit(10) --> dup2
+Exit(1) --> valore non intero di input  
+Exit(2) --> valore input <8  
+Exit(3) --> fork  
+Exit(4) --> execv  
+Exit(5) --> pipe  
+Exit(6) --> malloc  
+Exit(7) --> default sullo switch  
+Exit(8) --> waitpid  
+Exit(9) --> read  
+Exit(10) --> dup2  

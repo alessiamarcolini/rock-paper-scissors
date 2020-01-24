@@ -34,12 +34,14 @@ int main(int argc, char *argv[])
 
                 notParity = TRUE;
                 //printf("R S\n");
+                printf("%s %s %s %s R S\n", semiFinalId, firstPlayerId, secondPlayerId, winner);
             }
             else if (second == paper)
             { // second winner
                 winner = secondPlayerId;
                 notParity = TRUE;
                 //printf("R P\n");
+                printf("%s %s %s %s R P\n", semiFinalId, firstPlayerId, secondPlayerId, winner);
             }
             break;
         case paper:
@@ -48,12 +50,14 @@ int main(int argc, char *argv[])
                 winner = firstPlayerId;
                 notParity = TRUE;
                 //printf("P R\n");
+                printf("%s %s %s %s P R\n", semiFinalId, firstPlayerId, secondPlayerId, winner);
             }
             else if (second == scissor)
             { // second winner
                 winner = secondPlayerId;
                 notParity = TRUE;
                 //printf("P S\n");
+                printf("%s %s %s %s P S\n", semiFinalId, firstPlayerId, secondPlayerId, winner);
             }
             break;
         case scissor:
@@ -62,12 +66,14 @@ int main(int argc, char *argv[])
                 winner = firstPlayerId;
                 notParity = TRUE;
                 //printf("S P\n");
+                printf("%s %s %s %s S P\n", semiFinalId, firstPlayerId, secondPlayerId, winner);
             }
             else if (second == rock)
             { // second winner
                 winner = secondPlayerId;
                 notParity = TRUE;
                 //printf("S R\n");
+                printf("%s %s %s %s S R\n", semiFinalId, firstPlayerId, secondPlayerId, winner);
             }
             break;
         default:
@@ -79,7 +85,7 @@ int main(int argc, char *argv[])
 
     //printf("the winner is: %s\n", winner);
     //fprintf(stderr, "%s %s %s %s\n", semiFinalId, firstPlayerId, secondPlayerId, winner);
-    printf("%s %s %s %s\n", semiFinalId, firstPlayerId, secondPlayerId, winner);
+    //printf("%s %s %s %s\n", semiFinalId, firstPlayerId, secondPlayerId, winner);
 
     //free(winner);
     return 0;

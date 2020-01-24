@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <errno.h>
+#include <ctype.h>
 #include "utils.h"
 
 int championship[MAXN][MAXN];
@@ -174,10 +175,9 @@ int main(int argc, char *argv[])
                     homePlayer = resultsTokenized[j * MAINSTREAMLEN + 1];
                     externalPlayer = resultsTokenized[j * MAINSTREAMLEN + 2];
 
-                    printf("\t%d vs %d\t", homePlayer, externalPlayer);
-
                     if (homePlayer != 99 && externalPlayer != 99)
                     {
+                        printf("\t%d vs %d\t\t", homePlayer, externalPlayer);
                         winFirstPlayer = resultsTokenized[j * MAINSTREAMLEN + 5];
                         winSecondPlayer = resultsTokenized[j * MAINSTREAMLEN + 6];
                         printf("%d - %d\n", winFirstPlayer, winSecondPlayer);
@@ -198,6 +198,17 @@ int main(int argc, char *argv[])
                         {
                             scoreBoardR[homePlayer][externalPlayer] += winFirstPlayer;
                             scoreBoardR[externalPlayer][homePlayer] += winSecondPlayer;
+                        }
+                    }
+                    else
+                    {
+                        if (homePlayer == 99)
+                        {
+                            printf("\t\tNo match for %d\n", externalPlayer);
+                        }
+                        if (externalPlayer == 99)
+                        {
+                            printf("\t\tNo match for %d\n", homePlayer);
                         }
                     }
                 }
@@ -600,7 +611,7 @@ int main(int argc, char *argv[])
             char *firstSign = messageTokenized[j * 6 + 4];
             char *secondSign = messageTokenized[j * 6 + 5];
 
-            printf("\t%s vs %s\t %s - %s\n", firstPlayer, secondPlayer, firstSign, secondSign);
+            printf("\t%s vs %s\t\t%s - %s\n", firstPlayer, secondPlayer, firstSign, secondSign);
             winnersQuarters[j] = winner;
             //fprintf(stderr, "winner: %s\n", winner);
         }
@@ -650,8 +661,14 @@ int main(int argc, char *argv[])
         exit(8);
     }
 
+    printf("\nRemaining players: ");
+    for (i = 0; i < nQuarters; i++)
+    {
+        printf("%s ", winnersQuarters[i]);
+    }
+    printf("\n");
     // semi finals
-    printf("SEMI FINALS\n");
+    printf("\n----- SEMI FINALS -----\n");
     e = pipe(fd);
     if (e < 0)
     {
@@ -676,7 +693,7 @@ int main(int argc, char *argv[])
             fprintf(stderr, "Error reading from pipe.\n");
             exit(8);
         }
-        fprintf(stderr, "\n- main3: Read %d bytes: \n%s", bytesRead, messageSemiFinals);
+        //fprintf(stderr, "\n- main3: Read %d bytes: \n%s", bytesRead, messageSemiFinals);
 
         char *messageTokenized[MAINSTREAMLEN * 4]; // *(playersNumber/2) dovuto al fatto che legge tutto lo stream della giornata, e non il singolo match
         //tokenizer(messageSemiFinals, messageTokenized, " ", (MAINSTREAMLEN)*4);
@@ -684,11 +701,14 @@ int main(int argc, char *argv[])
 
         for (j = 0; j < nSemiFinals; j++)
         {
-            char *firstPlayer = messageTokenized[j * 4 + 1];
-            char *secondPlayer = messageTokenized[j * 4 + 2];
-            char *winner = messageTokenized[j * 4 + 3];
+            char *firstPlayer = messageTokenized[j * 6 + 1];
+            char *secondPlayer = messageTokenized[j * 6 + 2];
+            char *winner = messageTokenized[j * 6 + 3];
+            char *firstSign = messageTokenized[j * 6 + 4];
+            char *secondSign = messageTokenized[j * 6 + 5];
+
             winnersSemiFinals[j] = winner;
-            fprintf(stderr, "winner: %s\n", winner);
+            printf("\t%s vs %s\t\t%s - %s\n", firstPlayer, secondPlayer, firstSign, secondSign);
         }
     }
     else
@@ -707,8 +727,6 @@ int main(int argc, char *argv[])
         paramList[0] = "bin/semiFinals";
         paramList[1] = "4";
         paramList[playersNumber + 3] = NULL;
-
-        fprintf(stderr, "sto creando semifinals\n");
 
         for (i = 0; i < nSemiFinals * 2; i++)
         {
@@ -737,9 +755,16 @@ int main(int argc, char *argv[])
         exit(8);
     }
 
+    printf("\nRemaining players: ");
+    for (i = 0; i < nSemiFinals; i++)
+    {
+        printf("%s ", winnersSemiFinals[i]);
+    }
+    printf("\n");
+
     // finals
 
-    printf("FINALI\n");
+    printf("\n----- FINALS -----\n");
 
     e = pipe(fd);
     if (e < 0)
@@ -765,7 +790,7 @@ int main(int argc, char *argv[])
             fprintf(stderr, "Error reading from pipe.\n");
             exit(8);
         }
-        fprintf(stderr, "\n- main4: Read %d bytes: \n%s", bytesRead, messageFinals);
+        //fprintf(stderr, "\n- main4: Read %d bytes: \n%s", bytesRead, messageFinals);
 
         char *messageTokenized[MAINSTREAMLEN * 1]; // *(playersNumber/2) dovuto al fatto che legge tutto lo stream della giornata, e non il singolo match
         tokenizerMultipleDelimiter(messageFinals, messageTokenized);
@@ -773,7 +798,11 @@ int main(int argc, char *argv[])
         char *firstPlayer = messageTokenized[1];
         char *secondPlayer = messageTokenized[2];
         char *winner = messageTokenized[3];
-        fprintf(stderr, "winner: %s\n", winner);
+        char *firstSign = messageTokenized[4];
+        char *secondSign = messageTokenized[5];
+        printf("\t%s vs %s\t\t%s - %s\n", firstPlayer, secondPlayer, firstSign, secondSign);
+
+        printf("\n\nTHE WINNER IS: %s\n", winner);
     }
     else
     {

@@ -33,12 +33,14 @@ int main(int argc, char *argv[])
 
                 notParity = TRUE;
                 //printf("R S\n");
+                printf("%s %s %s %s R S\n", finalId, firstPlayerId, secondPlayerId, winner);
             }
             else if (second == paper)
             { // second winner
                 winner = secondPlayerId;
                 notParity = TRUE;
                 //printf("R P\n");
+                printf("%s %s %s %s R P\n", finalId, firstPlayerId, secondPlayerId, winner);
             }
             break;
         case paper:
@@ -47,12 +49,14 @@ int main(int argc, char *argv[])
                 winner = firstPlayerId;
                 notParity = TRUE;
                 //printf("P R\n");
+                printf("%s %s %s %s P R\n", finalId, firstPlayerId, secondPlayerId, winner);
             }
             else if (second == scissor)
             { // second winner
                 winner = secondPlayerId;
                 notParity = TRUE;
                 //printf("P S\n");
+                printf("%s %s %s %s P S\n", finalId, firstPlayerId, secondPlayerId, winner);
             }
             break;
         case scissor:
@@ -61,12 +65,14 @@ int main(int argc, char *argv[])
                 winner = firstPlayerId;
                 notParity = TRUE;
                 //printf("S P\n");
+                printf("%s %s %s %s S P\n", finalId, firstPlayerId, secondPlayerId, winner);
             }
             else if (second == rock)
             { // second winner
                 winner = secondPlayerId;
                 notParity = TRUE;
                 //printf("S R\n");
+                printf("%s %s %s %s S R\n", finalId, firstPlayerId, secondPlayerId, winner);
             }
             break;
         default:
@@ -76,8 +82,5 @@ int main(int argc, char *argv[])
         }
     } while (!notParity);
 
-    printf("%s %s %s %s\n", finalId, firstPlayerId, secondPlayerId, winner);
-
-    //free(winner);
     return 0;
 }
